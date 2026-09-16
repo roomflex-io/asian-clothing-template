@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Noor Atelier — Asian & modest wear</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="home">
+  <header>
+    <div class="wrap nav">
+      <a class="logo" href="index.html" data-shop-name>Noor Atelier<span data-tagline>Asian & modest wear</span></a>
+      <button class="burger" data-burger aria-label="Menu">☰</button>
+      <nav class="links" data-nav></nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <p class="kicker">Bespoke template for your shop</p>
+        <h1>Asian wear.<br />Made to feel like yours.</h1>
+        <p>Lehenga, wedding, abayas, thobes, lawn, winter shawls, attar and extras — tabs on or off depending on what you stock.</p>
+        <div class="btns">
+          <a class="btn solid" href="shop.html?cat=her">Shop the edit</a>
+          <a class="btn ghost" href="contact.html">Visit / enquire</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div>
+          <small>Featured</small>
+          <h2 style="font-size:2rem;font-weight:500;margin-top:6px;">Wedding & everyday modest</h2>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Departments</h2>
+        <p>Hide any of these in js/config.js</p>
+      </div>
+      <div class="cats" data-cats></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>This week</h2>
+        <p>Placeholder pieces — swap names and prices in config.js</p>
+      </div>
+      <div class="grid" data-home-grid></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div>
+        <strong data-shop-name></strong><br />
+        <span data-address></span><br />
+        <span data-phone></span> · <span data-email></span>
+      </div>
+      <div>
+        <a data-wa>WhatsApp</a> · <a data-ig>Instagram</a><br />
+        <a href="privacy.html">Privacy</a> · <a href="contact.html">Contact</a><br />
+        © <span data-year></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/nav.js"></script>
+  <script>
+    const swatches = ["", "s2", "s3", "s4"];
+    const cats = document.querySelector("[data-cats]");
+    cats.innerHTML = Object.entries(SHOP.collections)
+      .filter(([, c]) => c.on)
+      .map(([key, c]) => `<a class="cat" href="${c.href}"><span>${key}</span><strong>${c.label}</strong></a>`)
+      .join("");
+
+    const grid = document.querySelector("[data-home-grid]");
+    grid.innerHTML = PRODUCTS.slice(0, 8).map((p, i) => `
+      <a class="card" href="shop.html?cat=${p.cat}">
+        <div class="swatch ${swatches[i % 4]}"></div>
+        <div class="info">
+          ${p.tag ? `<span class="pill">${p.tag}</span>` : ""}
+          <h3>${p.name}</h3>
+          <div class="meta"><span>${p.cat}</span><span>${p.price}</span></div>
+        </div>
+      </a>`).join("");
+  </script>
+</body>
+</html>

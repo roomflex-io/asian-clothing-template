@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shop — Noor Atelier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="logo" href="index.html" data-shop-name>Noor Atelier<span data-tagline></span></a>
+      <button class="burger" data-burger aria-label="Menu">☰</button>
+      <nav class="links" data-nav></nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-hero">
+      <p class="kicker">Collection</p>
+      <h1 data-title>Shop</h1>
+      <p class="sans" style="color:var(--muted);margin-top:8px;">Tap WhatsApp on a piece when you take this live — or hook Stripe later.</p>
+    </div>
+    <section>
+      <div class="grid" data-grid></div>
+      <p class="empty" data-empty hidden>This collection is off, or has no pieces yet. Turn it on in js/config.js.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div>
+        <strong data-shop-name></strong><br />
+        <span data-address></span>
+      </div>
+      <div>
+        <a href="index.html">Home</a> · <a href="contact.html">Contact</a> · <a href="privacy.html">Privacy</a><br />
+        © <span data-year></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script>
+    const cat = new URLSearchParams(location.search).get("cat") || "her";
+    document.body.dataset.page = cat;
+  </script>
+  <script src="js/nav.js"></script>
+  <script>
+    const col = SHOP.collections[cat];
+    const title = document.querySelector("[data-title]");
+    title.textContent = col ? col.label : "Shop";
+    document.title = (col ? col.label : "Shop") + " — " + SHOP.name;
+
+    const list = (col && col.on)
+      ? PRODUCTS.filter((p) => p.cat === cat)
+      : [];
+    const swatches = ["", "s2", "s3", "s4"];
+    const grid = document.querySelector("[data-grid]");
+    const empty = document.querySelector("[data-empty]");
+    if (!list.length) empty.hidden = false;
+    grid.innerHTML = list.map((p, i) => `
+      <article class="card">
+        <div class="swatch ${swatches[i % 4]}"></div>
+        <div class="info">
+          ${p.tag ? `<span class="pill">${p.tag}</span>` : ""}
+          <h3>${p.name}</h3>
+          <div class="meta"><span>${p.price}</span><a data-wa href="#">Ask on WhatsApp</a></div>
+        </div>
+      </article>`).join("");
+    document.querySelectorAll("[data-wa]").forEach((a) => { a.href = SHOP.whatsapp; });
+  </script>
+</body>
+</html>
