@@ -30,8 +30,8 @@
           <a class="btn ghost" href="contact.html">Visit / enquire</a>
         </div>
       </div>
-      <div class="hero-card" data-hero-card>
-        <img alt="" data-hero-img />
+      <div class="hero-card">
+        <img alt="Bridal lehenga" data-hero-img />
         <div class="hero-cap">
           <small>Featured</small>
           <h2 style="font-size:2rem;font-weight:500;margin-top:6px;">Wedding & everyday modest</h2>
@@ -60,16 +60,24 @@
       </div>
     </div>
   </footer>
+  <script src="js/photo-lehenga.js"></script>
+  <script src="js/photo-abaya.js"></script>
+  <script src="js/photo-thobe.js"></script>
+  <script src="js/photo-perfume.js"></script>
+  <script src="js/photo-sherwani.js"></script>
+  <script src="js/photo-summer.js"></script>
+  <script src="js/photo-winter.js"></script>
+  <script src="js/photo-accessories.js"></script>
   <script src="js/config.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/cart.js"></script>
   <script>
     const hero = document.querySelector("[data-hero-img]");
-    if (hero) hero.src = SHOP.heroImg;
+    if (hero) hero.src = pic("lehenga");
     const grid = document.querySelector("[data-home-grid]");
     grid.innerHTML = PRODUCTS.slice(0, 8).map((p) => `
       <article class="card">
-        <a href="shop.html?cat=${p.cat}"><div class="swatch"><img src="${p.img}" alt="${p.name}"></div></a>
+        <a href="shop.html?cat=${p.cat}"><div class="swatch"><img src="${pic(p.img)}" alt="${p.name}"></div></a>
         <div class="info">
           ${p.tag ? `<span class="pill">${p.tag}</span>` : ""}
           <h3>${p.name}</h3>

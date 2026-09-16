@@ -35,14 +35,21 @@
       <div><a href="index.html">Home</a> · <a href="contact.html">Contact</a> · <a href="privacy.html">Privacy</a><br />© <span data-year></span></div>
     </div>
   </footer>
+  <script src="js/photo-lehenga.js"></script>
+  <script src="js/photo-abaya.js"></script>
+  <script src="js/photo-thobe.js"></script>
+  <script src="js/photo-perfume.js"></script>
+  <script src="js/photo-sherwani.js"></script>
+  <script src="js/photo-summer.js"></script>
+  <script src="js/photo-winter.js"></script>
+  <script src="js/photo-accessories.js"></script>
   <script src="js/config.js"></script>
   <script>const cat = new URLSearchParams(location.search).get("cat") || "her"; document.body.dataset.page = cat;</script>
   <script src="js/nav.js"></script>
   <script src="js/cart.js"></script>
   <script>
     const col = SHOP.collections[cat];
-    const title = document.querySelector("[data-title]");
-    title.textContent = col ? col.label : "Shop";
+    document.querySelector("[data-title]").textContent = col ? col.label : "Shop";
     document.title = (col ? col.label : "Shop") + " — " + SHOP.name;
     const list = (col && col.on) ? PRODUCTS.filter((p) => p.cat === cat) : [];
     const grid = document.querySelector("[data-grid]");
@@ -50,7 +57,7 @@
     if (!list.length) empty.hidden = false;
     grid.innerHTML = list.map((p) => `
       <article class="card">
-        <div class="swatch"><img src="${p.img}" alt="${p.name}"></div>
+        <div class="swatch"><img src="${pic(p.img)}" alt="${p.name}"></div>
         <div class="info">
           ${p.tag ? `<span class="pill">${p.tag}</span>` : ""}
           <h3>${p.name}</h3>
