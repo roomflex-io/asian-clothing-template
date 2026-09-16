@@ -1,0 +1,9 @@
+.nav { display: flex; align-items: center; gap: 12px; }
+.logo { order: 1; }
+.basket-wrap { order: 2; }
+nav.links { order: 3; margin-left: auto; }
+.burger { order: 4; margin-left: 4px; }
+
+@media (max-width: 700px) {
+  nav.links { margin-left: 0; }
+}

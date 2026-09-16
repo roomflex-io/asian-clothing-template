@@ -45,6 +45,7 @@
   function mountChrome() {
     if (document.querySelector("[data-basket-btn]")) return;
     const nav = document.querySelector(".nav");
+    const logo = nav && nav.querySelector(".logo");
     if (!nav) return;
     const wrap = document.createElement("div");
     wrap.className = "basket-wrap";
@@ -75,7 +76,8 @@
           <a class="btn solid bag-cta" data-wa href="#">Request these pieces</a>
         </footer>
       </aside>`;
-    nav.appendChild(wrap);
+    if (logo && logo.nextSibling) nav.insertBefore(wrap, logo.nextSibling);
+    else nav.appendChild(wrap);
     wrap.querySelector("[data-basket-btn]").addEventListener("click", open);
     wrap.querySelector("[data-drawer-close]").addEventListener("click", close);
     wrap.querySelector("[data-drawer-bg]").addEventListener("click", close);
@@ -101,11 +103,7 @@
     const list = document.querySelector("[data-drawer-list]");
     if (list) {
       if (!items.length) {
-        list.innerHTML = `
-          <div class="bag-empty">
-            <p>Your bag is empty</p>
-            <span>Add a piece from the shop — we’ll hold it when you message.</span>
-          </div>`;
+        list.innerHTML = `<div class="bag-empty"><p>Your bag is empty</p><span>Add a piece from the shop — we’ll hold it when you message.</span></div>`;
       } else {
         list.innerHTML = items.map((i, idx) => `
           <article class="bag-row">
