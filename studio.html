@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Studio — Noor Atelier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/basket.css" />
+  <link rel="stylesheet" href="css/header-order.css" />
+  <link rel="stylesheet" href="css/studio.css" />
+</head>
+<body data-page="studio">
+  <header>
+    <div class="wrap nav">
+      <button class="burger" data-burger type="button" aria-label="Menu">☰</button>
+      <a class="logo" href="index.html" data-shop-name>Noor Atelier<span data-tagline></span></a>
+      <nav class="links" data-nav></nav>
+      <div class="basket-slot" data-basket-slot></div>
+    </div>
+  </header>
+  <main class="wrap studio">
+    <div class="page-hero">
+      <p class="kicker">Shop desk</p>
+      <h1>Studio</h1>
+    </div>
+    <section class="gate" data-gate>
+      <p>Staff only. Enter the pin from <code>js/config.js</code> (<strong>adminPin</strong>).</p>
+      <div class="pin-row">
+        <input type="password" data-pin placeholder="Pin" inputmode="numeric" />
+        <button class="btn solid" type="button" data-unlock>Open</button>
+      </div>
+      <p class="err" data-pin-err hidden>Wrong pin.</p>
+    </section>
+    <section data-app hidden>
+      <div class="tabs">
+        <button type="button" class="on" data-tab="stock">Pieces</button>
+        <button type="button" data-tab="orders">Reservations</button>
+        <button type="button" data-tab="backup">Backup</button>
+      </div>
+      <div data-panel="stock">
+        <form class="product-form" data-product-form>
+          <input type="hidden" name="id" />
+          <input type="hidden" name="photo" />
+          <label class="preview" data-preview>
+            <input type="file" accept="image/*" data-file hidden />
+            <span>Tap to add a photo of the piece</span>
+          </label>
+          <label>Title<input name="name" required placeholder="Embroidered lawn suit" /></label>
+          <div class="two">
+            <label>Price<input name="price" required placeholder="45 or £45" /></label>
+            <label>Category
+              <select name="cat" required></select>
+            </label>
+          </div>
+          <label>Tag <span class="opt">optional</span><input name="tag" placeholder="New, Bridal, Sale" /></label>
+          <label>Description<textarea name="desc" placeholder="Fabric, size notes, when it is worn."></textarea></label>
+          <div class="btns">
+            <button class="btn solid" type="submit">Save piece</button>
+            <button class="btn ghost" type="button" data-reset>Clear form</button>
+          </div>
+        </form>
+        <h2 class="sub">On the floor</h2>
+        <div data-stock></div>
+      </div>
+      <div data-panel="orders" hidden>
+        <p class="lead">Customer requests open WhatsApp with the bag list. A copy is kept here when they send from this browser. Change the shop number in config.js — that is the real inbox.</p>
+        <div data-orders></div>
+      </div>
+      <div data-panel="backup" hidden>
+        <p class="lead">Photos and extra pieces live in this browser. Download a backup after you add stock. On a new phone, import that file.</p>
+        <div class="btns">
+          <button class="btn solid" type="button" data-export>Download backup</button>
+          <label class="btn ghost">Import backup<input type="file" accept="application/json" data-import hidden /></label>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap foot">
+      <div><strong data-shop-name></strong></div>
+      <div><a href="index.html">Home</a> · © <span data-year></span></div>
+    </div>
+  </footer>
+  <script src="js/config.js"></script>
+  <script src="js/catalog.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    const sel = document.querySelector("select[name=cat]");
+    sel.innerHTML = Object.entries(SHOP.collections).map(([k,c]) =>
+      `<option value="${k}">${c.label}</option>`
+    ).join("");
+  </script>
+  <script src="js/studio.js"></script>
+</body>
+</html>
