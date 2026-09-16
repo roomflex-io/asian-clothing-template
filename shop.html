@@ -51,7 +51,12 @@
     if (!list.length) empty.hidden = false;
     grid.innerHTML = list.map((p) => `
       <article class="card">
-        <div class="swatch"><img src="${pic(p.img)}" alt="${p.name}"></div>
+        <div class="swatch">
+          <div class="demo-shot">
+            <strong>Image shown here</strong>
+            <span>Not actual images</span>
+          </div>
+        </div>
         <div class="info">
           ${p.tag ? `<span class="pill">${p.tag}</span>` : ""}
           <h3>${p.name}</h3>
