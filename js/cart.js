@@ -71,15 +71,45 @@
             <span>Subtotal</span>
             <strong data-drawer-total>£0</strong>
           </div>
-          <p class="bag-note">Reserve on WhatsApp. Pay in store or when we confirm stock.</p>
-          <a class="btn solid bag-cta" data-wa href="#">Request these pieces</a>
+          <p class="bag-note">Reserve on WhatsApp. Pay in store or when stock is confirmed.</p>
+          <label class="bag-field">Your name<input data-cust-name placeholder="Name" /></label>
+          <label class="bag-field">Phone<input data-cust-phone placeholder="07…" inputmode="tel" /></label>
+          <label class="bag-field">Note <span>optional</span><input data-cust-note placeholder="Size, colour, collection date" /></label>
+          <button class="btn solid bag-cta" type="button" data-send-order>Request these pieces</button>
         </footer>
       </aside>`;
     slot.appendChild(wrap);
     wrap.querySelector("[data-basket-btn]").addEventListener("click", open);
     wrap.querySelector("[data-drawer-close]").addEventListener("click", close);
     wrap.querySelector("[data-drawer-bg]").addEventListener("click", close);
+    wrap.querySelector("[data-send-order]").addEventListener("click", sendOrder);
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+  }
+
+  function sendOrder() {
+    const items = load();
+    if (!items.length) return;
+    const name = (document.querySelector("[data-cust-name]") || {}).value || "";
+    const phone = (document.querySelector("[data-cust-phone]") || {}).value || "";
+    const note = (document.querySelector("[data-cust-note]") || {}).value || "";
+    const sum = items.reduce((s, i) => s + pence(i.price) * i.qty, 0);
+    const total = money(sum);
+    if (window.Catalog) {
+      Catalog.addOrder({ name, phone, note, items, total });
+    }
+    const lines = items.map((i) => `${i.qty} × ${i.name} (${i.price})`).join("\n");
+    const msg = [
+      "Hello, I’d like to request:",
+      lines,
+      "",
+      "Subtotal " + total,
+      name ? "Name: " + name : "",
+      phone ? "Phone: " + phone : "",
+      note ? "Note: " + note : ""
+    ].filter(Boolean).join("\n");
+    const base = (window.SHOP && SHOP.whatsapp) || "https://wa.me/44";
+    const url = base + (base.includes("?") ? "&" : "?") + "text=" + encodeURIComponent(msg);
+    window.open(url, "_blank");
   }
 
   function render() {
@@ -124,14 +154,6 @@
         list.querySelectorAll("[data-plus]").forEach((b) => b.onclick = () => change(b.dataset.plus, 1));
         list.querySelectorAll("[data-remove]").forEach((b) => b.onclick = () => remove(b.dataset.remove));
       }
-    }
-
-    const wa = document.querySelector(".drawer [data-wa]");
-    if (wa && window.SHOP) {
-      const lines = items.map((i) => `${i.qty} × ${i.name} (${i.price})`).join("\n");
-      const msg = "Hello, I’d like to request:\n" + lines + "\n\nSubtotal " + money(sum);
-      const base = window.SHOP.whatsapp || "https://wa.me/44";
-      wa.href = base + (base.includes("?") ? "&" : "?") + "text=" + encodeURIComponent(msg);
     }
   }
 
