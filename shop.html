@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="css/basket.css" />
   <link rel="stylesheet" href="css/photos.css" />
   <link rel="stylesheet" href="css/header-order.css" />
+  <link rel="stylesheet" href="css/studio.css" />
 </head>
 <body>
   <header>
@@ -39,6 +40,8 @@
   </footer>
   <script src="js/photos.js"></script>
   <script src="js/config.js"></script>
+  <script src="js/catalog.js"></script>
+  <script src="js/render-cards.js"></script>
   <script>const cat = new URLSearchParams(location.search).get("cat") || "her"; document.body.dataset.page = cat;</script>
   <script src="js/nav.js"></script>
   <script src="js/cart.js"></script>
@@ -46,27 +49,11 @@
     const col = SHOP.collections[cat];
     document.querySelector("[data-title]").textContent = col ? col.label : "Shop";
     document.title = (col ? col.label : "Shop") + " — " + SHOP.name;
-    const list = (col && col.on) ? PRODUCTS.filter((p) => p.cat === cat) : [];
+    const list = (col && col.on) ? Catalog.allProducts().filter((p) => p.cat === cat) : [];
     const grid = document.querySelector("[data-grid]");
     const empty = document.querySelector("[data-empty]");
     if (!list.length) empty.hidden = false;
-    grid.innerHTML = list.map((p) => `
-      <article class="card">
-        <div class="swatch">
-          <div class="demo-shot">
-            <strong>Image shown here</strong>
-            <span>Not actual images</span>
-          </div>
-        </div>
-        <div class="info">
-          ${p.tag ? `<span class="pill">${p.tag}</span>` : ""}
-          <h3>${p.name}</h3>
-          <div class="meta">
-            <span>${p.price}</span>
-            <button class="add" type="button" data-add data-name="${p.name}" data-price="${p.price}" data-img="${p.img}">Add</button>
-          </div>
-        </div>
-      </article>`).join("");
+    grid.innerHTML = list.map(cardHTML).join("");
   </script>
 </body>
 </html>

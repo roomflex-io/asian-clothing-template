@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="css/basket.css" />
   <link rel="stylesheet" href="css/photos.css" />
   <link rel="stylesheet" href="css/header-order.css" />
+  <link rel="stylesheet" href="css/studio.css" />
 </head>
 <body data-page="home">
   <header>
@@ -67,27 +68,13 @@
   </footer>
   <script src="js/photos.js"></script>
   <script src="js/config.js"></script>
+  <script src="js/catalog.js"></script>
+  <script src="js/render-cards.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/cart.js"></script>
   <script>
     const grid = document.querySelector("[data-home-grid]");
-    grid.innerHTML = PRODUCTS.slice(0, 8).map((p) => `
-      <article class="card">
-        <a href="shop.html?cat=${p.cat}"><div class="swatch">
-          <div class="demo-shot">
-            <strong>Image shown here</strong>
-            <span>Not actual images</span>
-          </div>
-        </div></a>
-        <div class="info">
-          ${p.tag ? `<span class="pill">${p.tag}</span>` : ""}
-          <h3>${p.name}</h3>
-          <div class="meta">
-            <span>${p.price}</span>
-            <button class="add" type="button" data-add data-name="${p.name}" data-price="${p.price}" data-img="${p.img}">Add</button>
-          </div>
-        </div>
-      </article>`).join("");
+    grid.innerHTML = Catalog.allProducts().slice(0, 8).map(cardHTML).join("");
   </script>
 </body>
 </html>

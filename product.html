@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Piece — Noor Atelier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/basket.css" />
+  <link rel="stylesheet" href="css/photos.css" />
+  <link rel="stylesheet" href="css/header-order.css" />
+  <link rel="stylesheet" href="css/studio.css" />
+  <style>
+    .piece { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; padding: 28px 0 80px; }
+    .piece-shot { min-height: 520px; background: #2a221c center/cover no-repeat; position: relative; }
+    .piece h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 500; margin: 8px 0 12px; }
+    .piece .price { font-size: 1.6rem; margin: 12px 0 18px; }
+    .piece .copy { font-family: "DM Sans", sans-serif; color: var(--muted); line-height: 1.65; max-width: 46ch; }
+    @media (max-width: 800px) { .piece { grid-template-columns: 1fr; } .piece-shot { min-height: 360px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <button class="burger" data-burger type="button" aria-label="Menu">☰</button>
+      <a class="logo" href="index.html" data-shop-name>Noor Atelier<span data-tagline></span></a>
+      <nav class="links" data-nav></nav>
+      <div class="basket-slot" data-basket-slot></div>
+    </div>
+  </header>
+  <main class="wrap piece" data-piece>
+    <div class="piece-shot" data-shot>
+      <div class="demo-shot"><strong>Image shown here</strong><span>Not actual images</span></div>
+    </div>
+    <div>
+      <p class="kicker" data-cat></p>
+      <h1 data-name>Piece</h1>
+      <p class="price" data-price></p>
+      <p class="copy" data-desc></p>
+      <div class="btns">
+        <button class="btn solid" type="button" data-add>Add to bag</button>
+        <a class="btn ghost" href="shop.html">Back to shop</a>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="wrap foot">
+      <div><strong data-shop-name></strong></div>
+      <div><a href="index.html">Home</a> · <a href="contact.html">Contact</a></div>
+    </div>
+  </footer>
+  <script src="js/config.js"></script>
+  <script src="js/catalog.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    const id = new URLSearchParams(location.search).get("id");
+    const p = Catalog.allProducts().find((x) => x.id === id) || Catalog.allProducts()[0];
+    if (p) {
+      document.title = p.name + " — " + SHOP.name;
+      document.querySelector("[data-name]").textContent = p.name;
+      document.querySelector("[data-price]").textContent = p.price;
+      document.querySelector("[data-desc]").textContent = p.desc || "Ask in shop for fabric and sizing.";
+      const col = SHOP.collections[p.cat];
+      document.querySelector("[data-cat]").textContent = col ? col.label : p.cat;
+      const add = document.querySelector("[data-add]");
+      add.dataset.name = p.name;
+      add.dataset.price = p.price;
+      if (p.photo) {
+        const shot = document.querySelector("[data-shot]");
+        shot.style.backgroundImage = "url(" + p.photo + ")";
+        const demo = shot.querySelector(".demo-shot");
+        if (demo) demo.remove();
+      }
+    }
+  </script>
+</body>
+</html>
