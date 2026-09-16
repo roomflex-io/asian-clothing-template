@@ -23,7 +23,7 @@ body.cart-open { overflow: hidden; }
 .sans { font-family: "DM Sans", system-ui, sans-serif; }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
-.wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+.wrap { width: min(1680px, calc(100% - 64px)); margin: 0 auto; }
 
 @keyframes rise {
   from { opacity: 0; transform: translateY(18px); }
@@ -48,7 +48,7 @@ header {
 }
 .nav {
   display: flex; align-items: center;
-  gap: 12px; padding: 14px 0;
+  gap: 12px; padding: 18px 0;
 }
 .logo {
   font-size: 1.45rem; letter-spacing: 0.08em;
@@ -76,25 +76,29 @@ nav.links a:hover::after, nav.links a.active::after { right: 0; }
 .burger { display: none; background: none; border: 0; font-size: 1.4rem; cursor: pointer; }
 
 .hero {
-  padding: 72px 0 56px;
-  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center;
+  padding: 80px 0 64px;
+  display: grid; grid-template-columns: 1fr 1.15fr; gap: 64px; align-items: stretch;
+  min-height: min(72vh, 760px);
 }
-.hero > div:first-child { animation: rise 0.7s ease both; }
+.hero > div:first-child {
+  animation: rise 0.7s ease both;
+  display: flex; flex-direction: column; justify-content: center;
+}
 .kicker {
   font-family: "DM Sans", sans-serif;
   font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
   color: var(--gold-dark);
 }
 .hero h1 {
-  font-size: clamp(2.6rem, 6vw, 4.4rem);
-  line-height: 0.95; font-weight: 500; margin: 12px 0 18px;
+  font-size: clamp(3rem, 6vw, 6.2rem);
+  line-height: 0.92; font-weight: 500; margin: 12px 0 18px;
 }
-.hero p { font-family: "DM Sans", sans-serif; color: var(--muted); max-width: 42ch; line-height: 1.6; }
+.hero p { font-family: "DM Sans", sans-serif; color: var(--muted); max-width: 46ch; line-height: 1.6; font-size: 1.02rem; }
 .btns { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
 .btn {
   font-family: "DM Sans", sans-serif;
   font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 12px 18px; border: 1px solid var(--ink); display: inline-block;
+  padding: 14px 22px; border: 1px solid var(--ink); display: inline-block;
   transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
 }
 .btn:hover { transform: translateY(-2px); }
@@ -105,20 +109,21 @@ nav.links a:hover::after, nav.links a.active::after { right: 0; }
 
 .hero-card {
   background: linear-gradient(160deg, #2a221c, #4a3a2c 40%, #c4a574);
-  min-height: 420px; border-radius: 4px;
-  display: flex; align-items: flex-end; padding: 28px; color: var(--cream);
+  min-height: 100%;
+  border-radius: 0;
+  display: flex; align-items: flex-end; padding: 36px; color: var(--cream);
   animation: rise 0.8s 0.1s ease both;
   transition: transform 0.5s ease;
 }
-.hero-card:hover { transform: scale(1.015); }
+.hero-card:hover { transform: scale(1.01); }
 .hero-card small { font-family: "DM Sans", sans-serif; letter-spacing: 0.16em; text-transform: uppercase; font-size: 0.68rem; opacity: 0.8; }
 
-section { padding: 56px 0; }
+section { padding: 56px 0 80px; }
 .section-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 28px; animation: rise 0.6s ease both; }
-.section-head h2 { font-size: 2rem; font-weight: 500; }
+.section-head h2 { font-size: 2.4rem; font-weight: 500; }
 .section-head p { font-family: "DM Sans", sans-serif; color: var(--muted); font-size: 0.9rem; }
 
-.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 .card {
   background: var(--white); border: 1px solid var(--line);
   animation: rise 0.6s ease both;
@@ -126,7 +131,7 @@ section { padding: 56px 0; }
 }
 .card:hover { transform: translateY(-6px); box-shadow: 0 16px 30px rgba(26,20,16,0.08); }
 .swatch {
-  height: 220px;
+  height: 280px;
   background:
     radial-gradient(circle at 30% 20%, rgba(255,255,255,.18), transparent 40%),
     linear-gradient(165deg, #3a2e26, #6b5340 45%, #c4a574);
@@ -136,8 +141,8 @@ section { padding: 56px 0; }
 .swatch.s2 { background: linear-gradient(165deg, #1c2420, #3d4f46 50%, #c4a574); }
 .swatch.s3 { background: linear-gradient(165deg, #2c1c24, #6a3a48 50%, #e0c4a0); }
 .swatch.s4 { background: linear-gradient(165deg, #241c14, #8a6a40 55%, #f0e0c8); }
-.card .info { padding: 14px 14px 16px; }
-.card .info h3 { font-size: 1.15rem; font-weight: 500; }
+.card .info { padding: 16px 16px 18px; }
+.card .info h3 { font-size: 1.2rem; font-weight: 500; }
 .meta { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-family: "DM Sans", sans-serif; font-size: 0.82rem; color: var(--muted); gap: 8px; }
 .add {
   border: 1px solid var(--ink); background: transparent; cursor: pointer;
@@ -150,8 +155,8 @@ section { padding: 56px 0; }
   letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--line); padding: 3px 7px; margin-bottom: 8px;
 }
 
-.page-hero { padding: 48px 0 12px; animation: rise 0.55s ease both; }
-.page-hero h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 500; }
+.page-hero { padding: 56px 0 12px; animation: rise 0.55s ease both; }
+.page-hero h1 { font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 500; }
 
 .legal { font-family: "DM Sans", sans-serif; color: var(--muted); line-height: 1.7; max-width: 70ch; animation: rise 0.5s ease both; }
 .legal h2 { font-family: "Cormorant Garamond", serif; color: var(--ink); font-size: 1.6rem; margin: 28px 0 8px; font-weight: 500; }
@@ -178,9 +183,19 @@ footer a { color: var(--ink); }
 body.cart-open .drawer-bg { opacity: 1; pointer-events: auto; }
 body.cart-open .drawer { transform: none; }
 
+@media (min-width: 1400px) {
+  .wrap { width: calc(100% - 80px); }
+  .grid { grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .swatch { height: 320px; }
+}
+@media (max-width: 1100px) {
+  .hero { grid-template-columns: 1fr 1fr; gap: 32px; min-height: 0; }
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
 @media (max-width: 900px) {
   .hero, .grid { grid-template-columns: 1fr 1fr; }
   .hero-card { min-height: 280px; }
+  .wrap { width: calc(100% - 40px); }
 }
 @media (max-width: 700px) {
   .burger { display: block; }
@@ -191,4 +206,5 @@ body.cart-open .drawer { transform: none; }
   }
   nav.links.open { display: flex; }
   .hero, .grid { grid-template-columns: 1fr; }
+  .hero { min-height: 0; }
 }
