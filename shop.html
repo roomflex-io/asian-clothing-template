@@ -22,7 +22,6 @@
     <div class="page-hero">
       <p class="kicker">Collection</p>
       <h1 data-title>Shop</h1>
-      <p class="sans" style="color:var(--muted);margin-top:8px;">Tap WhatsApp on a piece when you take this live — or hook Stripe later.</p>
     </div>
     <section>
       <div class="grid" data-grid></div>
@@ -49,15 +48,14 @@
     document.body.dataset.page = cat;
   </script>
   <script src="js/nav.js"></script>
+  <script src="js/cart.js"></script>
   <script>
     const col = SHOP.collections[cat];
     const title = document.querySelector("[data-title]");
     title.textContent = col ? col.label : "Shop";
     document.title = (col ? col.label : "Shop") + " — " + SHOP.name;
 
-    const list = (col && col.on)
-      ? PRODUCTS.filter((p) => p.cat === cat)
-      : [];
+    const list = (col && col.on) ? PRODUCTS.filter((p) => p.cat === cat) : [];
     const swatches = ["", "s2", "s3", "s4"];
     const grid = document.querySelector("[data-grid]");
     const empty = document.querySelector("[data-empty]");
@@ -68,10 +66,12 @@
         <div class="info">
           ${p.tag ? `<span class="pill">${p.tag}</span>` : ""}
           <h3>${p.name}</h3>
-          <div class="meta"><span>${p.price}</span><a data-wa href="#">Ask on WhatsApp</a></div>
+          <div class="meta">
+            <span>${p.price}</span>
+            <button class="add" type="button" data-add data-name="${p.name}" data-price="${p.price}">Add</button>
+          </div>
         </div>
       </article>`).join("");
-    document.querySelectorAll("[data-wa]").forEach((a) => { a.href = SHOP.whatsapp; });
   </script>
 </body>
 </html>

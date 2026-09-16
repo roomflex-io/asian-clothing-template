@@ -63,18 +63,22 @@
 
   <script src="js/config.js"></script>
   <script src="js/nav.js"></script>
+  <script src="js/cart.js"></script>
   <script>
     const swatches = ["", "s2", "s3", "s4"];
     const grid = document.querySelector("[data-home-grid]");
     grid.innerHTML = PRODUCTS.slice(0, 8).map((p, i) => `
-      <a class="card" href="shop.html?cat=${p.cat}">
-        <div class="swatch ${swatches[i % 4]}"></div>
+      <article class="card">
+        <a href="shop.html?cat=${p.cat}"><div class="swatch ${swatches[i % 4]}"></div></a>
         <div class="info">
           ${p.tag ? `<span class="pill">${p.tag}</span>` : ""}
           <h3>${p.name}</h3>
-          <div class="meta"><span>${p.cat}</span><span>${p.price}</span></div>
+          <div class="meta">
+            <span>${p.price}</span>
+            <button class="add" type="button" data-add data-name="${p.name}" data-price="${p.price}">Add</button>
+          </div>
         </div>
-      </a>`).join("");
+      </article>`).join("");
   </script>
 </body>
 </html>
