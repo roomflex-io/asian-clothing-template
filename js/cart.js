@@ -1,5 +1,6 @@
 (function () {
   const KEY = "noor-basket";
+  const tones = ["#3a2e26", "#3d4f46", "#6a3a48", "#8a6a40"];
 
   function load() {
     try { return JSON.parse(localStorage.getItem(KEY) || "[]"); }
@@ -12,6 +13,12 @@
   function count() {
     return load().reduce((n, i) => n + i.qty, 0);
   }
+  function pence(price) {
+    return Number(String(price).replace(/[^0-9.]/g, "")) || 0;
+  }
+  function money(n) {
+    return "£" + n.toLocaleString("en-GB");
+  }
 
   function add(item) {
     const items = load();
@@ -21,13 +28,12 @@
     save(items);
     pulse();
   }
-
   function change(name, delta) {
-    let items = load();
-    items = items.map((x) => x.name === name ? { ...x, qty: x.qty + delta } : x).filter((x) => x.qty > 0);
-    save(items);
+    save(load().map((x) => x.name === name ? { ...x, qty: x.qty + delta } : x).filter((x) => x.qty > 0));
   }
-
+  function remove(name) {
+    save(load().filter((x) => x.name !== name));
+  }
   function pulse() {
     const btn = document.querySelector("[data-basket-btn]");
     if (!btn) return;
@@ -37,43 +43,43 @@
   }
 
   function mountChrome() {
+    if (document.querySelector("[data-basket-btn]")) return;
     const nav = document.querySelector(".nav");
-    if (!nav || document.querySelector("[data-basket-btn]")) return;
+    if (!nav) return;
     const wrap = document.createElement("div");
     wrap.className = "basket-wrap";
     wrap.innerHTML = `
-      <button class="basket-btn" data-basket-btn type="button" aria-label="Basket">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-          <path d="M6 7h12l-1 13H7L6 7z"/>
-          <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
+      <button class="basket-btn" data-basket-btn type="button" aria-label="Bag">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round">
+          <path d="M7 7.2h10l-.72 12.2H7.72L7 7.2z"/>
+          <path d="M9.2 7.2V5.8a2.8 2.8 0 0 1 5.6 0v1.4"/>
         </svg>
         <span class="badge" data-basket-count hidden>0</span>
       </button>
       <div class="drawer-bg" data-drawer-bg></div>
-      <aside class="drawer" data-drawer>
-        <div class="drawer-head">
-          <h2>Basket</h2>
-          <button type="button" class="icon-x" data-drawer-close aria-label="Close">×</button>
-        </div>
+      <aside class="drawer" data-drawer role="dialog" aria-label="Your bag">
+        <header class="bag-head">
+          <div>
+            <p class="bag-kicker">Your bag</p>
+            <h2 data-bag-title>0 pieces</h2>
+          </div>
+          <button type="button" class="bag-close" data-drawer-close aria-label="Close">Close</button>
+        </header>
         <div class="drawer-list" data-drawer-list></div>
-        <div class="drawer-foot">
-          <p class="drawer-total">Total <strong data-drawer-total>£0</strong></p>
-          <a class="btn solid" data-wa href="#">Checkout on WhatsApp</a>
-        </div>
+        <footer class="bag-foot" data-bag-foot hidden>
+          <div class="bag-sum">
+            <span>Subtotal</span>
+            <strong data-drawer-total>£0</strong>
+          </div>
+          <p class="bag-note">Reserve on WhatsApp. Pay in store or when we confirm stock.</p>
+          <a class="btn solid bag-cta" data-wa href="#">Request these pieces</a>
+        </footer>
       </aside>`;
     nav.appendChild(wrap);
-
     wrap.querySelector("[data-basket-btn]").addEventListener("click", open);
     wrap.querySelector("[data-drawer-close]").addEventListener("click", close);
     wrap.querySelector("[data-drawer-bg]").addEventListener("click", close);
-  }
-
-  function money(items) {
-    const n = items.reduce((s, i) => {
-      const p = Number(String(i.price).replace(/[^0-9.]/g, "")) || 0;
-      return s + p * i.qty;
-    }, 0);
-    return "£" + n;
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
   }
 
   function render() {
@@ -84,42 +90,59 @@
       badge.textContent = n;
       badge.hidden = n === 0;
     }
-    const list = document.querySelector("[data-drawer-list]");
+    const title = document.querySelector("[data-bag-title]");
+    if (title) title.textContent = n === 1 ? "1 piece" : n + " pieces";
+    const foot = document.querySelector("[data-bag-foot]");
+    if (foot) foot.hidden = items.length === 0;
     const total = document.querySelector("[data-drawer-total]");
+    const sum = items.reduce((s, i) => s + pence(i.price) * i.qty, 0);
+    if (total) total.textContent = money(sum);
+
+    const list = document.querySelector("[data-drawer-list]");
     if (list) {
-      list.innerHTML = items.length
-        ? items.map((i) => `
-          <div class="row">
-            <div>
-              <strong>${i.name}</strong>
-              <span>${i.price} × ${i.qty}</span>
+      if (!items.length) {
+        list.innerHTML = `
+          <div class="bag-empty">
+            <p>Your bag is empty</p>
+            <span>Add a piece from the shop — we’ll hold it when you message.</span>
+          </div>`;
+      } else {
+        list.innerHTML = items.map((i, idx) => `
+          <article class="bag-row">
+            <div class="bag-thumb" style="background:${tones[idx % tones.length]}"></div>
+            <div class="bag-copy">
+              <h3>${i.name}</h3>
+              <p>${i.price}</p>
+              <div class="bag-actions">
+                <div class="stepper">
+                  <button type="button" data-minus="${i.name}" aria-label="Fewer">−</button>
+                  <em>${i.qty}</em>
+                  <button type="button" data-plus="${i.name}" aria-label="More">+</button>
+                </div>
+                <button type="button" class="text-btn" data-remove="${i.name}">Remove</button>
+              </div>
             </div>
-            <div class="qty">
-              <button type="button" data-minus="${i.name}">−</button>
-              <button type="button" data-plus="${i.name}">+</button>
-            </div>
-          </div>`).join("")
-        : `<p class="empty-cart">Nothing in here yet.</p>`;
-      list.querySelectorAll("[data-minus]").forEach((b) => b.onclick = () => change(b.dataset.minus, -1));
-      list.querySelectorAll("[data-plus]").forEach((b) => b.onclick = () => change(b.dataset.plus, 1));
+            <div class="bag-line">${money(pence(i.price) * i.qty)}</div>
+          </article>`).join("");
+        list.querySelectorAll("[data-minus]").forEach((b) => b.onclick = () => change(b.dataset.minus, -1));
+        list.querySelectorAll("[data-plus]").forEach((b) => b.onclick = () => change(b.dataset.plus, 1));
+        list.querySelectorAll("[data-remove]").forEach((b) => b.onclick = () => remove(b.dataset.remove));
+      }
     }
-    if (total) total.textContent = money(items);
+
     const wa = document.querySelector(".drawer [data-wa]");
     if (wa && window.SHOP) {
-      const text = items.map((i) => `${i.qty}x ${i.name} (${i.price})`).join("%0A");
-      wa.href = window.SHOP.whatsapp + (window.SHOP.whatsapp.includes("?") ? "&" : "?") + "text=" + encodeURIComponent("Order:%0A" + decodeURIComponent(text));
+      const lines = items.map((i) => `${i.qty} × ${i.name} (${i.price})`).join("\n");
+      const msg = "Hello, I’d like to request:\n" + lines + "\n\nSubtotal " + money(sum);
+      const base = window.SHOP.whatsapp || "https://wa.me/44";
+      wa.href = base + (base.includes("?") ? "&" : "?") + "text=" + encodeURIComponent(msg);
     }
   }
 
-  function open() {
-    document.body.classList.add("cart-open");
-  }
-  function close() {
-    document.body.classList.remove("cart-open");
-  }
+  function open() { document.body.classList.add("cart-open"); }
+  function close() { document.body.classList.remove("cart-open"); }
 
   window.Basket = { add, render };
-
   document.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-add]");
     if (!btn) return;

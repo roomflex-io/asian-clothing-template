@@ -1,0 +1,94 @@
+.basket-btn {
+  width: 40px; height: 40px; border: 0; background: transparent;
+  display: grid; place-items: center; cursor: pointer; position: relative;
+}
+.basket-btn:hover { opacity: 0.65; }
+.badge {
+  position: absolute; top: 4px; right: 2px;
+  min-width: 16px; height: 16px; padding: 0 4px;
+  background: var(--ink); color: var(--cream);
+  font-family: "DM Sans", sans-serif; font-size: 0.6rem; line-height: 16px;
+  text-align: center; border-radius: 99px;
+}
+
+.drawer {
+  width: min(420px, 94vw);
+  background: #f3eee6;
+  box-shadow: -24px 0 60px rgba(26,20,16,0.12);
+}
+.bag-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 28px 28px 20px;
+  border-bottom: 1px solid var(--line);
+}
+.bag-kicker {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold-dark); margin-bottom: 6px;
+}
+.bag-head h2 { font-size: 1.85rem; font-weight: 500; line-height: 1; }
+.bag-close {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  background: none; border: 0; cursor: pointer; color: var(--muted);
+  margin-top: 8px;
+}
+.bag-close:hover { color: var(--ink); }
+
+.drawer-list { padding: 8px 28px 20px; }
+.bag-empty {
+  padding: 56px 0;
+  text-align: center;
+}
+.bag-empty p { font-size: 1.6rem; margin-bottom: 8px; }
+.bag-empty span {
+  font-family: "DM Sans", sans-serif; font-size: 0.88rem; color: var(--muted);
+}
+
+.bag-row {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+}
+.bag-thumb { height: 92px; background: #4a3a2c; }
+.bag-copy h3 { font-size: 1.15rem; font-weight: 500; line-height: 1.2; }
+.bag-copy p {
+  font-family: "DM Sans", sans-serif; font-size: 0.8rem; color: var(--muted); margin: 4px 0 10px;
+}
+.bag-actions { display: flex; align-items: center; gap: 14px; }
+.stepper {
+  display: inline-flex; align-items: center; border: 1px solid var(--line); background: #fff;
+}
+.stepper button {
+  width: 30px; height: 28px; border: 0; background: transparent; cursor: pointer; color: var(--ink);
+}
+.stepper em {
+  font-family: "DM Sans", sans-serif; font-style: normal; font-size: 0.78rem; min-width: 16px; text-align: center;
+}
+.text-btn {
+  font-family: "DM Sans", sans-serif; font-size: 0.68rem; letter-spacing: 0.08em;
+  text-transform: uppercase; background: none; border: 0; color: var(--muted); cursor: pointer; padding: 0;
+}
+.text-btn:hover { color: var(--ink); }
+.bag-line {
+  font-family: "DM Sans", sans-serif; font-size: 0.82rem; padding-top: 4px;
+}
+
+.bag-foot {
+  padding: 20px 28px 28px;
+  border-top: 1px solid var(--line);
+  background: #efe8de;
+}
+.bag-sum {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: "DM Sans", sans-serif; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.bag-sum strong { font-family: "Cormorant Garamond", serif; font-size: 1.5rem; font-weight: 500; letter-spacing: 0; text-transform: none; }
+.bag-note {
+  font-family: "DM Sans", sans-serif; font-size: 0.78rem; color: var(--muted); line-height: 1.45; margin-bottom: 16px;
+}
+.bag-cta { width: 100%; text-align: center; }
