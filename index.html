@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/basket.css" />
+  <link rel="stylesheet" href="css/photos.css" />
 </head>
 <body data-page="home">
   <header>
@@ -29,8 +30,9 @@
           <a class="btn ghost" href="contact.html">Visit / enquire</a>
         </div>
       </div>
-      <div class="hero-card">
-        <div>
+      <div class="hero-card" data-hero-card>
+        <img alt="" data-hero-img />
+        <div class="hero-cap">
           <small>Featured</small>
           <h2 style="font-size:2rem;font-weight:500;margin-top:6px;">Wedding & everyday modest</h2>
         </div>
@@ -62,11 +64,12 @@
   <script src="js/nav.js"></script>
   <script src="js/cart.js"></script>
   <script>
-    const swatches = ["", "s2", "s3", "s4"];
+    const hero = document.querySelector("[data-hero-img]");
+    if (hero) hero.src = SHOP.heroImg;
     const grid = document.querySelector("[data-home-grid]");
-    grid.innerHTML = PRODUCTS.slice(0, 8).map((p, i) => `
+    grid.innerHTML = PRODUCTS.slice(0, 8).map((p) => `
       <article class="card">
-        <a href="shop.html?cat=${p.cat}"><div class="swatch ${swatches[i % 4]}"></div></a>
+        <a href="shop.html?cat=${p.cat}"><div class="swatch"><img src="${p.img}" alt="${p.name}"></div></a>
         <div class="info">
           ${p.tag ? `<span class="pill">${p.tag}</span>` : ""}
           <h3>${p.name}</h3>

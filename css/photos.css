@@ -1,0 +1,19 @@
+.swatch { padding: 0; overflow: hidden; position: relative; background: #2a221c; }
+.swatch img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.6s ease;
+}
+.card:hover .swatch img { transform: scale(1.05); }
+.hero-card {
+  position: relative; overflow: hidden; background: #2a221c;
+  padding: 0 !important; min-height: 520px;
+}
+.hero-card img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+}
+.hero-cap {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
+  padding: 28px;
+  background: linear-gradient(transparent, rgba(20,14,10,.7));
+  color: #f6f1ea;
+}

@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/basket.css" />
+  <link rel="stylesheet" href="css/photos.css" />
 </head>
 <body>
   <header>
@@ -44,13 +45,12 @@
     title.textContent = col ? col.label : "Shop";
     document.title = (col ? col.label : "Shop") + " — " + SHOP.name;
     const list = (col && col.on) ? PRODUCTS.filter((p) => p.cat === cat) : [];
-    const swatches = ["", "s2", "s3", "s4"];
     const grid = document.querySelector("[data-grid]");
     const empty = document.querySelector("[data-empty]");
     if (!list.length) empty.hidden = false;
-    grid.innerHTML = list.map((p, i) => `
+    grid.innerHTML = list.map((p) => `
       <article class="card">
-        <div class="swatch ${swatches[i % 4]}"></div>
+        <div class="swatch"><img src="${p.img}" alt="${p.name}"></div>
         <div class="info">
           ${p.tag ? `<span class="pill">${p.tag}</span>` : ""}
           <h3>${p.name}</h3>
