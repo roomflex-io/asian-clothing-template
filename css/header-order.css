@@ -1,32 +1,54 @@
+/* Mobile shop header: menu left, name centre, bag right.
+   Desktop: name left, links, bag right. Burger hidden. */
 .nav {
   display: flex;
   align-items: center;
   gap: 12px;
   position: relative;
 }
-.logo { order: 1; }
-nav.links { order: 2; margin-left: auto; }
-.basket-wrap { order: 3; margin-left: 8px; }
-.burger { order: 4; }
+.basket-slot {
+  margin-left: 4px;
+  flex: 0 0 auto;
+}
+.burger {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  display: none;
+}
 
 @media (max-width: 700px) {
+  .nav {
+    display: grid;
+    grid-template-columns: 44px 1fr 44px;
+    align-items: center;
+    gap: 0;
+  }
   .burger {
-    order: 1;
-    display: block;
+    display: grid;
+    place-items: center;
+    grid-column: 1;
+    grid-row: 1;
     margin: 0;
-    margin-right: 8px;
+    justify-self: start;
   }
   .logo {
-    order: 2;
-    flex: 1;
+    grid-column: 2;
+    grid-row: 1;
     text-align: center;
+    margin: 0;
+    justify-self: center;
   }
-  .basket-wrap {
-    order: 3;
-    margin-left: 0;
+  .logo span { display: none; }
+  .basket-slot {
+    grid-column: 3;
+    grid-row: 1;
+    margin: 0;
+    justify-self: end;
   }
   nav.links {
-    order: 4;
-    margin-left: 0;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin: 0;
   }
 }

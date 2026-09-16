@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/basket.css" />
+  <link rel="stylesheet" href="css/header-order.css" />
   <style>
     .visit { padding: 28px 0 72px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
     .visit h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 500; line-height: 0.95; margin: 8px 0 18px; }
@@ -31,9 +32,10 @@
 <body data-page="contact">
   <header>
     <div class="wrap nav">
+      <button class="burger" data-burger type="button" aria-label="Menu">☰</button>
       <a class="logo" href="index.html" data-shop-name>Noor Atelier<span data-tagline></span></a>
-      <button class="burger" data-burger aria-label="Menu">☰</button>
       <nav class="links" data-nav></nav>
+      <div class="basket-slot" data-basket-slot></div>
     </div>
   </header>
 

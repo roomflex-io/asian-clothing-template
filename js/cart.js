@@ -44,9 +44,8 @@
 
   function mountChrome() {
     if (document.querySelector("[data-basket-btn]")) return;
-    const nav = document.querySelector(".nav");
-    const logo = nav && nav.querySelector(".logo");
-    if (!nav) return;
+    const slot = document.querySelector("[data-basket-slot]") || document.querySelector(".nav");
+    if (!slot) return;
     const wrap = document.createElement("div");
     wrap.className = "basket-wrap";
     wrap.innerHTML = `
@@ -76,8 +75,7 @@
           <a class="btn solid bag-cta" data-wa href="#">Request these pieces</a>
         </footer>
       </aside>`;
-    if (logo && logo.nextSibling) nav.insertBefore(wrap, logo.nextSibling);
-    else nav.appendChild(wrap);
+    slot.appendChild(wrap);
     wrap.querySelector("[data-basket-btn]").addEventListener("click", open);
     wrap.querySelector("[data-drawer-close]").addEventListener("click", close);
     wrap.querySelector("[data-drawer-bg]").addEventListener("click", close);
