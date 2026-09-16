@@ -1,9 +1,32 @@
-.nav { display: flex; align-items: center; gap: 12px; }
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
 .logo { order: 1; }
-.basket-wrap { order: 2; }
-nav.links { order: 3; margin-left: auto; }
-.burger { order: 4; margin-left: 4px; }
+nav.links { order: 2; margin-left: auto; }
+.basket-wrap { order: 3; margin-left: 8px; }
+.burger { order: 4; }
 
 @media (max-width: 700px) {
-  nav.links { margin-left: 0; }
+  .burger {
+    order: 1;
+    display: block;
+    margin: 0;
+    margin-right: 8px;
+  }
+  .logo {
+    order: 2;
+    flex: 1;
+    text-align: center;
+  }
+  .basket-wrap {
+    order: 3;
+    margin-left: 0;
+  }
+  nav.links {
+    order: 4;
+    margin-left: 0;
+  }
 }
