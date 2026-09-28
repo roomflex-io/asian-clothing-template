@@ -26,38 +26,54 @@
         <h1>Not connected.</h1>
         <p class="lead">Run the schema in Supabase, then refresh.</p>
       </div>
-      <div class="gate-panel">
-        <p class="gate-note">This desk needs the live shop before anyone can sign in.</p>
-      </div>
+      <div class="gate-panel"><p class="gate-note">This desk needs the live shop before anyone can sign in.</p></div>
     </section>
 
     <section class="gate-screen" data-screen="auth" hidden>
       <div class="gate-copy">
         <p class="kicker">Owner login</p>
-        <h1>Your shop.</h1>
+        <h1>Welcome back.</h1>
         <p class="lead">Owners only. Customers check out on the shop floor.</p>
       </div>
       <div class="gate-panel">
-        <label>Email<input data-email type="email" autocomplete="username" required /></label>
-        <label>Password<input data-password type="password" autocomplete="current-password" required minlength="6" /></label>
+        <label>Email<input data-email type="email" autocomplete="username" /></label>
+        <label>Password<input data-password type="password" autocomplete="current-password" /></label>
         <div class="gate-actions">
           <button class="btn solid" type="button" data-login>Log in</button>
-          <button class="btn ghost" type="button" data-signup>Create owner account</button>
         </div>
         <p class="gate-note err" data-auth-msg></p>
+        <button class="text-switch" type="button" data-go-signup>Create an account</button>
+      </div>
+    </section>
+
+    <section class="gate-screen" data-screen="signup" hidden>
+      <div class="gate-copy">
+        <p class="kicker">New owner</p>
+        <h1>Create an account.</h1>
+        <p class="lead">This login is only for the person who runs the shop.</p>
+      </div>
+      <div class="gate-panel">
+        <label>Your name<input data-reg-name autocomplete="name" /></label>
+        <label>Email<input data-reg-email type="email" autocomplete="email" /></label>
+        <label>Password<input data-reg-pass type="password" autocomplete="new-password" /></label>
+        <label>Confirm password<input data-reg-pass2 type="password" autocomplete="new-password" /></label>
+        <div class="gate-actions">
+          <button class="btn solid" type="button" data-signup>Create account</button>
+        </div>
+        <p class="gate-note err" data-signup-msg></p>
+        <button class="text-switch" type="button" data-go-login>I already have an account</button>
       </div>
     </section>
 
     <section class="gate-screen" data-screen="create" hidden>
       <div class="gate-copy">
         <p class="kicker">New shop</p>
-        <h1>Name the floor.</h1>
-        <p class="lead">Short slug. Use something like noor.</p>
+        <h1>Name the shop.</h1>
+        <p class="lead">This is what customers see on the site.</p>
       </div>
       <div class="gate-panel">
         <label>Shop name<input data-new-name placeholder="Noor Atelier" /></label>
-        <label>URL slug<input data-new-slug placeholder="noor" /></label>
-        <label>Owner name<input data-new-owner /></label>
+        <label>Your name<input data-new-owner /></label>
         <div class="gate-actions">
           <button class="btn solid" type="button" data-create-shop>Create shop</button>
         </div>
