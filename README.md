@@ -1,30 +1,17 @@
-# Asian clothing shop template
+# Noor Atelier shop
 
-Static site for independent Asian and modest wear shops.
+Static site for the clothing shop, with a proper checkout and an owner inventory desk.
 
-## Edit per client
+## Customer
 
-Open `js/config.js`:
-- shop name, phone, WhatsApp, Instagram, address
-- `adminPin` for the Studio desk
-- turn collections on/off (`on: true` / `false`)
-- starter product names and prices
+- Browse shop and product pages
+- Add to bag (blocked when sold out; capped at stock)
+- Checkout at `/checkout.html`
+- Order confirmation at `/confirm.html`
+- Stock is reduced when the order is placed
 
-Always-on pages: Home, Contact, Privacy.
+Card payments (Stripe) are not wired yet. Collection and bank transfer work now.
 
-## Studio (shop desk)
+## Owner desk
 
-Open `/studio.html` and enter the pin (default `2468`).
-
-The shop can add:
-- photo of the piece
-- title, price, description
-- category (him / her / lehenga / wedding / …)
-
-Reservations: the customer bag sends a WhatsApp to the shop number. That is the live inbox. A copy also appears under Studio → Reservations when sent from that browser.
-
-Photos added in Studio stay in that browser. Use Backup to download / import on another device.
-
-## Deploy
-
-Connected to Vercel. Push to `main` to publish.
+Open `/studio.html` and enter `adminPin` from `js/config.js`.
