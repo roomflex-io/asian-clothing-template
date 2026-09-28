@@ -7,6 +7,21 @@
     if (host.endsWith(".vercel.app") || host === "localhost") return (window.SHOP && (SHOP.slug || "noor")) || "noor";
     return host;
   }
+  function applyShop(shop) {
+    Hub.shop = shop;
+    if (!shop || !window.SHOP) return;
+    SHOP.name = shop.name || SHOP.name;
+    SHOP.tagline = shop.tagline || SHOP.tagline;
+    SHOP.phone = shop.phone || SHOP.phone;
+    SHOP.email = shop.email || SHOP.email;
+    SHOP.ownerName = shop.owner_name || SHOP.ownerName || "";
+    SHOP.address = [shop.address_line, shop.city, shop.postcode].filter(Boolean).join(", ") || SHOP.address;
+    SHOP.deliveryFee = Number(shop.delivery_fee || 0);
+    SHOP.freeDeliveryOver = Number(shop.free_delivery_over || 0);
+    SHOP.stripeReady = !!shop.stripe_ready;
+    SHOP.collectEnabled = shop.collect_enabled !== false;
+    SHOP.slug = shop.slug || SHOP.slug;
+  }
   function norm(p) {
     const media = (p.product_media || []).sort((a, b) => a.sort_order - b.sort_order);
     const photo = ((media.find((m) => m.kind === "photo") || {}).url) || "";
@@ -32,18 +47,11 @@
       const key = slugFromLocation();
       let shop = (await Hub.client.from("shops_public").select("*").eq("slug", key).maybeSingle()).data;
       if (!shop) shop = (await Hub.client.from("shops_public").select("*").eq("domain", key).maybeSingle()).data;
-      Hub.shop = shop;
-      if (shop && window.SHOP) {
-        SHOP.name = shop.name || SHOP.name;
-        SHOP.tagline = shop.tagline || SHOP.tagline;
-        SHOP.phone = shop.phone || SHOP.phone;
-        SHOP.email = shop.email || SHOP.email;
-        SHOP.address = [shop.address_line, shop.city, shop.postcode].filter(Boolean).join(", ") || SHOP.address;
-        SHOP.deliveryFee = Number(shop.delivery_fee || 0);
-        SHOP.freeDeliveryOver = Number(shop.free_delivery_over || 0);
-        SHOP.stripeReady = !!shop.stripe_ready;
-        SHOP.collectEnabled = shop.collect_enabled !== false;
+      if (!shop) {
+        const first = await Hub.client.from("shops_public").select("*").eq("active", true).limit(1);
+        shop = first.data && first.data[0];
       }
+      applyShop(shop);
       Hub.ok = true;
     } catch (err) {
       Hub.ok = false; Hub.error = err.message;
