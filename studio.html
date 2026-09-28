@@ -3,97 +3,145 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Studio — Noor Atelier</title>
+  <title>Owner desk</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/basket.css" />
   <link rel="stylesheet" href="css/header-order.css" />
   <link rel="stylesheet" href="css/studio.css" />
+  <link rel="stylesheet" href="css/studio-extra.css" />
 </head>
 <body data-page="studio">
   <header>
     <div class="wrap nav">
-      <button class="burger" data-burger type="button" aria-label="Menu">☰</button>
-      <a class="logo" href="index.html" data-shop-name>Noor Atelier<span data-tagline></span></a>
-      <nav class="links" data-nav></nav>
-      <div class="basket-slot" data-basket-slot></div>
+      <a class="logo" href="index.html">Owner desk<span>Atelier Hub</span></a>
     </div>
   </header>
   <main class="wrap studio">
-    <div class="page-hero">
-      <p class="kicker">Shop desk</p>
-      <h1>Studio</h1>
-    </div>
-    <section class="gate" data-gate>
-      <p>Staff only. Enter the pin from <code>js/config.js</code> (<strong>adminPin</strong>).</p>
-      <div class="pin-row">
-        <input type="password" data-pin placeholder="Pin" inputmode="numeric" />
-        <button class="btn solid" type="button" data-unlock>Open</button>
-      </div>
-      <p class="err" data-pin-err hidden>Wrong pin.</p>
+    <section data-screen="offline" hidden>
+      <h1>Database not connected</h1>
+      <p class="lead">Run schema.sql then schema-2, 3 and 4 in Supabase. Check Vercel env vars. Refresh this page.</p>
     </section>
-    <section data-app hidden>
+    <section data-screen="auth" hidden>
+      <p class="kicker">Owner login</p>
+      <h1>Your shop</h1>
+      <div class="product-form">
+        <label>Email<input data-email type="email" required /></label>
+        <label>Password<input data-password type="password" required minlength="6" /></label>
+        <div class="btns">
+          <button class="btn solid" type="button" data-login>Log in</button>
+          <button class="btn ghost" type="button" data-signup>Create owner account</button>
+        </div>
+        <p class="err" data-auth-msg></p>
+      </div>
+    </section>
+    <section data-screen="create" hidden>
+      <h1>Create your shop</h1>
+      <div class="product-form">
+        <label>Shop name<input data-new-name placeholder="Noor Atelier" /></label>
+        <label>URL slug<input data-new-slug placeholder="noor" /></label>
+        <label>Owner name<input data-new-owner /></label>
+        <button class="btn solid" type="button" data-create-shop>Create shop</button>
+        <p class="err" data-create-msg></p>
+      </div>
+    </section>
+    <section data-screen="app" hidden>
+      <div class="page-hero">
+        <p class="kicker">Owner desk</p>
+        <h1>Your listings</h1>
+        <button class="btn ghost" type="button" data-logout>Log out</button>
+      </div>
       <div class="tabs">
-        <button type="button" class="on" data-tab="stock">Pieces</button>
-        <button type="button" data-tab="orders">Reservations</button>
-        <button type="button" data-tab="backup">Backup</button>
+        <button type="button" class="on" data-tab="stock">Products</button>
+        <button type="button" data-tab="orders">Orders</button>
+        <button type="button" data-tab="shop">Shop + Stripe</button>
       </div>
       <div data-panel="stock">
         <form class="product-form" data-product-form>
           <input type="hidden" name="id" />
-          <input type="hidden" name="photo" />
-          <label class="preview" data-preview>
-            <input type="file" accept="image/*" data-file hidden />
-            <span>Tap to add a photo of the piece</span>
-          </label>
-          <label>Title<input name="name" required placeholder="Embroidered lawn suit" /></label>
           <div class="two">
-            <label>Price<input name="price" required placeholder="45 or £45" /></label>
-            <label>Category
-              <select name="cat" required></select>
+            <label>Title<input name="title" required /></label>
+            <label>SKU<input name="sku" /></label>
+          </div>
+          <div class="two">
+            <label>Page
+              <select name="page_slug">
+                <option value="her">For her</option>
+                <option value="him">For him</option>
+                <option value="summer">Summer</option>
+                <option value="winter">Winter</option>
+                <option value="autumn">Autumn</option>
+                <option value="lehenga">Lehenga</option>
+                <option value="wedding">Wedding</option>
+                <option value="abayas">Abayas</option>
+                <option value="thobes">Thobes</option>
+                <option value="perfumes">Perfumes</option>
+                <option value="accessories">Accessories</option>
+              </select>
             </label>
+            <label>Units in stock<input name="stock" type="number" min="0" value="1" /></label>
           </div>
-          <label>Tag <span class="opt">optional</span><input name="tag" placeholder="New, Bridal, Sale" /></label>
-          <label>Description<textarea name="desc" placeholder="Fabric, size notes, when it is worn."></textarea></label>
-          <div class="btns">
-            <button class="btn solid" type="submit">Save piece</button>
-            <button class="btn ghost" type="button" data-reset>Clear form</button>
+          <div class="two">
+            <label>Price (£)<input name="price" required inputmode="decimal" /></label>
+            <label>Sale price (£)<input name="sale_price" inputmode="decimal" /></label>
           </div>
+          <div class="checks">
+            <label class="check"><input type="checkbox" name="sale_on" /> On sale</label>
+            <label class="check"><input type="checkbox" name="active" checked /> Visible</label>
+          </div>
+          <label>Short description<textarea name="description"></textarea></label>
+          <label>Full details<textarea name="details"></textarea></label>
+          <div class="two">
+            <label>Sizes<input name="sizes" placeholder="S / M / L" /></label>
+            <label>Colours<input name="colours" /></label>
+          </div>
+          <div class="two">
+            <label>Fabric<input name="fabric" /></label>
+            <label>Care<input name="care" /></label>
+          </div>
+          <label>Internal notes<textarea name="notes_internal"></textarea></label>
+          <label>Video URL<input name="video_url" /></label>
+          <label>Photo or video file<input name="photo" type="file" accept="image/*,video/*" /></label>
+          <button class="btn solid" type="submit">Save product</button>
         </form>
-        <h2 class="sub">On the floor</h2>
+        <h2 class="sub">Stock</h2>
         <div data-stock></div>
       </div>
-      <div data-panel="orders" hidden>
-        <p class="lead">Customer requests open WhatsApp with the bag list. A copy is kept here when they send from this browser. Change the shop number in config.js — that is the real inbox.</p>
-        <div data-orders></div>
-      </div>
-      <div data-panel="backup" hidden>
-        <p class="lead">Photos and extra pieces live in this browser. Download a backup after you add stock. On a new phone, import that file.</p>
-        <div class="btns">
-          <button class="btn solid" type="button" data-export>Download backup</button>
-          <label class="btn ghost">Import backup<input type="file" accept="application/json" data-import hidden /></label>
-        </div>
+      <div data-panel="orders" hidden><div data-orders></div></div>
+      <div data-panel="shop" hidden>
+        <form class="product-form" data-shop-form>
+          <label>Shop name<input name="name" required /></label>
+          <label>Owner name<input name="owner_name" /></label>
+          <div class="two">
+            <label>Phone<input name="phone" /></label>
+            <label>Email<input name="email" type="email" /></label>
+          </div>
+          <label>Address<input name="address_line" /></label>
+          <div class="two">
+            <label>City<input name="city" /></label>
+            <label>Postcode<input name="postcode" /></label>
+          </div>
+          <label>Company number<input name="company_number" /></label>
+          <label>Tagline<input name="tagline" /></label>
+          <label>Logo URL<input name="logo_url" /></label>
+          <div class="two">
+            <label>Delivery fee (£)<input name="delivery_fee" /></label>
+            <label>Free over (£)<input name="free_delivery_over" /></label>
+          </div>
+          <h2 class="sub">This shop’s Stripe</h2>
+          <label>Publishable key<input name="stripe_pk" placeholder="pk_live_…" /></label>
+          <label>Secret key<input name="stripe_sk" type="password" placeholder="sk_live_… leave blank to keep" /></label>
+          <button class="btn solid" type="submit">Save shop</button>
+          <p data-shop-msg></p>
+        </form>
       </div>
     </section>
   </main>
-  <footer>
-    <div class="wrap foot">
-      <div><strong data-shop-name></strong></div>
-      <div><a href="index.html">Home</a> · © <span data-year></span></div>
-    </div>
-  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/config.js"></script>
-  <script src="js/catalog.js"></script>
-  <script src="js/nav.js"></script>
-  <script src="js/cart.js"></script>
-  <script>
-    const sel = document.querySelector("select[name=cat]");
-    sel.innerHTML = Object.entries(SHOP.collections).map(([k,c]) =>
-      `<option value="${k}">${c.label}</option>`
-    ).join("");
-  </script>
-  <script src="js/studio.js"></script>
+  <script src="js/hub.js"></script>
+  <script src="js/studio-cloud.js"></script>
+  <script>Hub.boot();</script>
 </body>
 </html>
