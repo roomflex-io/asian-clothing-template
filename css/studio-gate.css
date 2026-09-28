@@ -1,24 +1,8 @@
-body[data-page="studio"] {
-  background: var(--cream);
-}
-body[data-page="studio"] header {
-  border-bottom: 0;
-  background: transparent;
-  backdrop-filter: none;
-}
-body[data-page="studio"] header .nav {
-  padding: 22px 0 0;
-}
-body[data-page="studio"] header .logo {
-  font-size: .78rem;
-  letter-spacing: .32em;
-}
-body[data-page="studio"] header .logo span {
-  margin-top: 4px;
-}
-body[data-page="studio"] .studio {
-  padding-bottom: 0;
-}
+body[data-page="studio"] { background: var(--cream); }
+body[data-page="studio"] header { border-bottom: 0; background: transparent; backdrop-filter: none; }
+body[data-page="studio"] header .nav { padding: 22px 0 0; }
+body[data-page="studio"] header .logo { font-size: .78rem; letter-spacing: .32em; }
+body[data-page="studio"] .studio { padding-bottom: 0; }
 .gate-screen {
   min-height: calc(100vh - 88px);
   display: grid;
@@ -33,11 +17,7 @@ body[data-page="studio"] .studio {
   line-height: .92;
   margin: 8px 0 16px;
 }
-.gate-copy .lead {
-  margin: 0;
-  max-width: 32ch;
-  font-size: .95rem;
-}
+.gate-copy .lead { margin: 0; max-width: 32ch; font-size: .95rem; }
 .gate-panel {
   background: #fffaf4;
   border: 1px solid var(--line);
@@ -68,36 +48,16 @@ body[data-page="studio"] .studio {
   appearance: none;
   box-shadow: none;
 }
-.gate-panel input:focus {
-  border-color: var(--ink);
-  background: #fff;
-}
-.gate-panel input::placeholder {
-  color: #b3a89c;
-}
-.gate-actions {
-  display: grid;
-  gap: 10px;
-  margin-top: 8px;
-}
+.gate-panel input:focus { border-color: var(--ink); background: #fff; }
+.gate-actions { display: grid; gap: 10px; margin-top: 8px; }
 .gate-actions .btn {
   width: 100%;
   text-align: center;
   padding: 16px 18px;
-  color: inherit;
-  -webkit-text-fill-color: inherit;
-}
-.gate-actions .btn.solid {
-  background: var(--ink);
   color: var(--cream) !important;
   -webkit-text-fill-color: var(--cream);
+  background: var(--ink);
   border-color: var(--ink);
-}
-.gate-actions .btn.ghost {
-  background: transparent;
-  color: var(--ink) !important;
-  -webkit-text-fill-color: var(--ink);
-  border: 1px solid var(--ink);
 }
 .gate-note {
   font-family: "DM Sans", sans-serif;
@@ -106,6 +66,23 @@ body[data-page="studio"] .studio {
   min-height: 1.2em;
   margin-top: 14px;
   line-height: 1.5;
+}
+.text-switch {
+  display: block;
+  width: 100%;
+  margin-top: 18px;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: "DM Sans", sans-serif;
+  font-size: .78rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 @media (max-width: 800px) {
   .gate-screen {
