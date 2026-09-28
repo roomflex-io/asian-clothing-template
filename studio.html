@@ -21,16 +21,23 @@
   </header>
   <main class="wrap studio">
     <section class="gate-screen" data-screen="offline" hidden>
-      <p class="kicker">Owner desk</p>
-      <h1>Not connected.</h1>
-      <p class="lead">Run the schema in Supabase, then refresh. This desk needs the live shop before anyone can sign in.</p>
+      <div class="gate-copy">
+        <p class="kicker">Owner desk</p>
+        <h1>Not connected.</h1>
+        <p class="lead">Run the schema in Supabase, then refresh.</p>
+      </div>
+      <div class="gate-panel">
+        <p class="gate-note">This desk needs the live shop before anyone can sign in.</p>
+      </div>
     </section>
 
     <section class="gate-screen" data-screen="auth" hidden>
-      <p class="kicker">Owner login</p>
-      <h1>Your shop.</h1>
-      <p class="lead">Owners only. Customers check out on the shop floor.</p>
-      <div class="gate-card">
+      <div class="gate-copy">
+        <p class="kicker">Owner login</p>
+        <h1>Your shop.</h1>
+        <p class="lead">Owners only. Customers check out on the shop floor.</p>
+      </div>
+      <div class="gate-panel">
         <label>Email<input data-email type="email" autocomplete="username" required /></label>
         <label>Password<input data-password type="password" autocomplete="current-password" required minlength="6" /></label>
         <div class="gate-actions">
@@ -42,10 +49,12 @@
     </section>
 
     <section class="gate-screen" data-screen="create" hidden>
-      <p class="kicker">New shop</p>
-      <h1>Name the floor.</h1>
-      <p class="lead">This slug is how the site finds you. Use something short, like noor.</p>
-      <div class="gate-card">
+      <div class="gate-copy">
+        <p class="kicker">New shop</p>
+        <h1>Name the floor.</h1>
+        <p class="lead">Short slug. Use something like noor.</p>
+      </div>
+      <div class="gate-panel">
         <label>Shop name<input data-new-name placeholder="Noor Atelier" /></label>
         <label>URL slug<input data-new-slug placeholder="noor" /></label>
         <label>Owner name<input data-new-owner /></label>
@@ -140,8 +149,8 @@
             <label>Free over (£)<input name="free_delivery_over" /></label>
           </div>
           <h2 class="sub">This shop’s Stripe</h2>
-          <label>Publishable key<input name="stripe_pk" placeholder="pk_live_…" /></label>
-          <label>Secret key<input name="stripe_sk" type="password" placeholder="sk_live_… leave blank to keep" /></label>
+          <label>Publishable key<input name="stripe_pk" /></label>
+          <label>Secret key<input name="stripe_sk" type="password" /></label>
           <button class="btn solid" type="submit">Save shop</button>
           <p data-shop-msg></p>
         </form>
