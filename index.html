@@ -34,47 +34,30 @@
         </div>
       </div>
       <div class="hero-card">
-        <div class="demo-shot">
-          <strong>Image shown here</strong>
-          <span>Not actual images</span>
-        </div>
-        <div class="hero-cap">
-          <small>Featured</small>
-          <h2 style="font-size:2rem;font-weight:500;margin-top:6px;">Wedding & everyday modest</h2>
-        </div>
+        <div class="demo-shot"><strong>Image shown here</strong><span>Not actual images</span></div>
+        <div class="hero-cap"><small>Featured</small><h2 style="font-size:2rem;font-weight:500;margin-top:6px;">Wedding & everyday modest</h2></div>
       </div>
     </section>
     <section>
-      <div class="section-head">
-        <h2>This week</h2>
-        <p>New pieces in the shop</p>
-      </div>
+      <div class="section-head"><h2>This week</h2><p>New pieces in the shop</p></div>
       <div class="grid" data-home-grid></div>
     </section>
   </main>
   <footer>
     <div class="wrap foot">
-      <div>
-        <strong data-shop-name></strong><br />
-        <span data-address></span><br />
-        <span data-phone></span> · <span data-email></span>
-      </div>
-      <div>
-        <a data-wa>WhatsApp</a> · <a data-ig>Instagram</a><br />
-        <a href="privacy.html">Privacy</a> · <a href="contact.html">Contact</a><br />
-        © <span data-year></span>
-      </div>
+      <div><strong data-shop-name></strong><br /><span data-address></span><br /><span data-phone></span> · <span data-email></span></div>
+      <div><a data-wa>WhatsApp</a> · <a data-ig>Instagram</a><br /><a href="privacy.html">Privacy</a> · <a href="contact.html">Contact</a><br />© <span data-year></span></div>
     </div>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/photos.js"></script>
   <script src="js/config.js"></script>
   <script src="js/catalog.js"></script>
   <script src="js/render-cards.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/cart.js"></script>
-  <script>
-    const grid = document.querySelector("[data-home-grid]");
-    grid.innerHTML = Catalog.allProducts().slice(0, 8).map(cardHTML).join("");
-  </script>
+  <script src="js/hub.js"></script>
+  <script src="js/storefront.js"></script>
+  <script>Hub.boot();</script>
 </body>
 </html>
