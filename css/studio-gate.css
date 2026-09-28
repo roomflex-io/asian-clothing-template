@@ -1,69 +1,97 @@
+body[data-page="studio"] {
+  background: var(--cream);
+}
+body[data-page="studio"] header {
+  border-bottom: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+body[data-page="studio"] header .nav {
+  padding: 22px 0 0;
+}
 body[data-page="studio"] header .logo {
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  font-size: .72rem;
+  font-size: .78rem;
+  letter-spacing: .32em;
 }
 body[data-page="studio"] header .logo span {
-  letter-spacing: .16em;
+  margin-top: 4px;
+}
+body[data-page="studio"] .studio {
+  padding-bottom: 0;
 }
 .gate-screen {
-  max-width: 420px;
-  padding: 36px 0 80px;
-}
-.gate-screen .kicker {
-  margin-bottom: 10px;
-}
-.gate-screen h1 {
-  font-size: clamp(2.4rem, 8vw, 3.4rem);
-  font-weight: 500;
-  line-height: .95;
-  margin: 0 0 10px;
-}
-.gate-screen .lead {
-  margin: 0 0 28px;
-  max-width: 34ch;
-}
-.gate-card {
+  min-height: calc(100vh - 88px);
   display: grid;
-  gap: 16px;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+  padding: 24px 0 72px;
 }
-.gate-card label {
+.gate-copy h1 {
+  font-size: clamp(2.8rem, 7vw, 4.6rem);
+  font-weight: 500;
+  line-height: .92;
+  margin: 8px 0 16px;
+}
+.gate-copy .lead {
+  margin: 0;
+  max-width: 32ch;
+  font-size: .95rem;
+}
+.gate-panel {
+  background: #fffaf4;
+  border: 1px solid var(--line);
+  padding: 32px 28px 28px;
+}
+.gate-panel label {
   display: grid;
   gap: 8px;
+  margin-bottom: 18px;
   font-family: "DM Sans", sans-serif;
   font-size: .68rem;
-  letter-spacing: .16em;
+  letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--muted);
 }
-.gate-card input {
+.gate-panel input {
   width: 100%;
-  box-sizing: border-box;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid var(--line);
+  height: 52px;
+  background: var(--cream);
+  border: 1px solid var(--line);
   border-radius: 0;
-  padding: 12px 0 14px;
+  padding: 0 14px;
   font-family: "Cormorant Garamond", serif;
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   color: var(--ink);
   outline: none;
   -webkit-appearance: none;
+  appearance: none;
+  box-shadow: none;
 }
-.gate-card input:focus {
-  border-bottom-color: var(--ink);
+.gate-panel input:focus {
+  border-color: var(--ink);
+  background: #fff;
+}
+.gate-panel input::placeholder {
+  color: #b3a89c;
 }
 .gate-actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 10px;
   margin-top: 8px;
 }
 .gate-actions .btn {
-  flex: 1 1 160px;
+  width: 100%;
   text-align: center;
+  padding: 16px 18px;
   color: inherit;
   -webkit-text-fill-color: inherit;
+}
+.gate-actions .btn.solid {
+  background: var(--ink);
+  color: var(--cream) !important;
+  -webkit-text-fill-color: var(--cream);
+  border-color: var(--ink);
 }
 .gate-actions .btn.ghost {
   background: transparent;
@@ -71,14 +99,22 @@ body[data-page="studio"] header .logo span {
   -webkit-text-fill-color: var(--ink);
   border: 1px solid var(--ink);
 }
-.gate-actions .btn.solid {
-  color: var(--cream) !important;
-  -webkit-text-fill-color: var(--cream);
-}
 .gate-note {
   font-family: "DM Sans", sans-serif;
   font-size: .78rem;
   color: var(--muted);
-  margin-top: 8px;
+  min-height: 1.2em;
+  margin-top: 14px;
   line-height: 1.5;
+}
+@media (max-width: 800px) {
+  .gate-screen {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    align-items: start;
+    min-height: 0;
+    padding: 18px 0 64px;
+  }
+  .gate-copy h1 { font-size: 3rem; }
+  .gate-panel { padding: 24px 18px; }
 }
