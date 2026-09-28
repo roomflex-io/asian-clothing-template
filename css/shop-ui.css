@@ -1,0 +1,52 @@
+.hero-simple {
+  grid-template-columns: 1fr;
+  min-height: 0;
+  padding: 48px 0 24px;
+  gap: 0;
+}
+.hero-simple h1 {
+  font-size: clamp(2.8rem, 9vw, 5.4rem);
+  max-width: 12ch;
+}
+.home-edit { padding-top: 12px; }
+.quiet-link {
+  font-family: "DM Sans", sans-serif;
+  font-size: .78rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.page-hero.slim { padding: 28px 0 8px; }
+.chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0 18px;
+  -webkit-overflow-scrolling: touch;
+}
+.chip {
+  flex: 0 0 auto;
+  font-family: "DM Sans", sans-serif;
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  padding: 8px 12px;
+  color: var(--muted);
+  background: #fffaf4;
+}
+.chip.on, .chip:hover {
+  background: var(--ink);
+  color: var(--cream);
+  border-color: var(--ink);
+}
+.grid { gap: 14px; }
+.card { background: #fffaf4; }
+.swatch { height: 240px; }
+@media (max-width: 700px) {
+  .hero-simple { padding-top: 28px; }
+  .hero-simple p { max-width: 28ch; }
+  .swatch { height: 220px; }
+  .card .info { padding: 12px 12px 14px; }
+  .add { padding: 8px 10px; }
+}
