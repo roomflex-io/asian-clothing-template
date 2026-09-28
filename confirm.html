@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Order received</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/header-order.css" />
+</head>
+<body>
+  <header><div class="wrap nav"><a class="logo" href="index.html">Thank you</a></div></header>
+  <main class="wrap" style="padding:48px 0">
+    <p class="kicker">Order</p>
+    <h1>We have it.</h1>
+    <p class="lead" data-msg>If you paid by card, that payment is with the shop. If you chose collection, pay when you pick up.</p>
+    <a class="btn solid" href="index.html">Back to the shop</a>
+  </main>
+  <script src="js/cart.js"></script>
+  <script>
+    const id = new URLSearchParams(location.search).get("id");
+    if (id) fetch("/api/mark-paid?id=" + encodeURIComponent(id)).catch(function () {});
+    if (window.Basket) Basket.clear();
+  </script>
+</body>
+</html>
