@@ -51,30 +51,13 @@
       <div><a href="index.html">Home</a> · <a href="contact.html">Contact</a></div>
     </div>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/config.js"></script>
   <script src="js/catalog.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/cart.js"></script>
-  <script>
-    const id = new URLSearchParams(location.search).get("id");
-    const p = Catalog.allProducts().find((x) => x.id === id) || Catalog.allProducts()[0];
-    if (p) {
-      document.title = p.name + " — " + SHOP.name;
-      document.querySelector("[data-name]").textContent = p.name;
-      document.querySelector("[data-price]").textContent = p.price;
-      document.querySelector("[data-desc]").textContent = p.desc || "Ask in shop for fabric and sizing.";
-      const col = SHOP.collections[p.cat];
-      document.querySelector("[data-cat]").textContent = col ? col.label : p.cat;
-      const add = document.querySelector("[data-add]");
-      add.dataset.name = p.name;
-      add.dataset.price = p.price;
-      if (p.photo) {
-        const shot = document.querySelector("[data-shot]");
-        shot.style.backgroundImage = "url(" + p.photo + ")";
-        const demo = shot.querySelector(".demo-shot");
-        if (demo) demo.remove();
-      }
-    }
-  </script>
+  <script src="js/hub.js"></script>
+  <script src="js/storefront.js"></script>
+  <script>Hub.boot();</script>
 </body>
 </html>
