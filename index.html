@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Noor Atelier — Asian & modest wear</title>
+  <title>Shop</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
@@ -11,42 +11,41 @@
   <link rel="stylesheet" href="css/basket.css" />
   <link rel="stylesheet" href="css/photos.css" />
   <link rel="stylesheet" href="css/header-order.css" />
-  <link rel="stylesheet" href="css/studio.css" />
+  <link rel="stylesheet" href="css/shop-ui.css" />
 </head>
 <body data-page="home">
   <header>
     <div class="wrap nav">
       <button class="burger" data-burger type="button" aria-label="Menu">☰</button>
-      <a class="logo" href="index.html" data-shop-name>Noor Atelier<span data-tagline>Asian & modest wear</span></a>
+      <a class="logo" href="index.html" data-shop-name>Shop<span data-tagline></span></a>
       <nav class="links" data-nav></nav>
       <div class="basket-slot" data-basket-slot></div>
     </div>
   </header>
   <main class="wrap">
-    <section class="hero">
+    <section class="hero hero-simple">
       <div>
-        <p class="kicker">Bespoke template for your shop</p>
-        <h1>Asian wear.<br />Made to feel like yours.</h1>
-        <p>Lehenga, wedding, abayas, thobes, lawn, winter shawls, attar and extras — tabs on or off depending on what you stock.</p>
+        <p class="kicker" data-tagline>New pieces</p>
+        <h1 data-shop-name>The shop</h1>
+        <p>Browse the edit, add a piece, check out when you are ready.</p>
         <div class="btns">
-          <a class="btn solid" href="shop.html?cat=her">Shop the edit</a>
-          <a class="btn ghost" href="contact.html">Visit / enquire</a>
+          <a class="btn solid" href="shop.html">Shop now</a>
+          <a class="btn ghost" href="contact.html">Visit</a>
         </div>
       </div>
-      <div class="hero-card">
-        <div class="demo-shot"><strong>Image shown here</strong><span>Not actual images</span></div>
-        <div class="hero-cap"><small>Featured</small><h2 style="font-size:2rem;font-weight:500;margin-top:6px;">Wedding & everyday modest</h2></div>
-      </div>
     </section>
-    <section>
-      <div class="section-head"><h2>This week</h2><p>New pieces in the shop</p></div>
+    <section class="home-edit">
+      <div class="section-head">
+        <h2>In the shop</h2>
+        <a class="quiet-link" href="shop.html">See all</a>
+      </div>
       <div class="grid" data-home-grid></div>
     </section>
   </main>
   <footer>
     <div class="wrap foot">
-      <div><strong data-shop-name></strong><br /><span data-address></span><br /><span data-phone></span> · <span data-email></span></div>
-      <div><a data-wa>WhatsApp</a> · <a data-ig>Instagram</a><br /><a href="privacy.html">Privacy</a> · <a href="contact.html">Contact</a><br />© <span data-year></span></div>
+      <div><strong data-shop-name></strong><br /><span data-address></span><br /><span data-phone></span></div>
+      <div><a href="contact.html">Visit</a> · <a href="privacy.html">Privacy</a><br />© <span data-year></span></div>
     </div>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

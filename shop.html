@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Shop — Noor Atelier</title>
+  <title>Shop</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
@@ -11,28 +11,32 @@
   <link rel="stylesheet" href="css/basket.css" />
   <link rel="stylesheet" href="css/photos.css" />
   <link rel="stylesheet" href="css/header-order.css" />
-  <link rel="stylesheet" href="css/studio.css" />
+  <link rel="stylesheet" href="css/shop-ui.css" />
 </head>
-<body>
+<body data-shop-page="1">
   <header>
     <div class="wrap nav">
       <button class="burger" data-burger type="button" aria-label="Menu">☰</button>
-      <a class="logo" href="index.html" data-shop-name>Noor Atelier<span data-tagline></span></a>
+      <a class="logo" href="index.html" data-shop-name>Shop<span data-tagline></span></a>
       <nav class="links" data-nav></nav>
       <div class="basket-slot" data-basket-slot></div>
     </div>
   </header>
   <main class="wrap">
-    <div class="page-hero"><p class="kicker">Collection</p><h1 data-title>Shop</h1></div>
+    <div class="page-hero slim">
+      <p class="kicker">Shop</p>
+      <h1 data-title>All pieces</h1>
+    </div>
+    <div class="chips" data-chips></div>
     <section>
       <div class="grid" data-grid></div>
-      <p class="empty" data-empty hidden>This collection is off, or has no pieces yet.</p>
+      <p class="empty" data-empty hidden>Nothing in this collection yet.</p>
     </section>
   </main>
   <footer>
     <div class="wrap foot">
       <div><strong data-shop-name></strong><br /><span data-address></span></div>
-      <div><a href="index.html">Home</a> · <a href="contact.html">Contact</a> · <a href="privacy.html">Privacy</a><br />© <span data-year></span></div>
+      <div><a href="contact.html">Visit</a> · <a href="privacy.html">Privacy</a></div>
     </div>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -40,7 +44,6 @@
   <script src="js/config.js"></script>
   <script src="js/catalog.js"></script>
   <script src="js/render-cards.js"></script>
-  <script>const cat = new URLSearchParams(location.search).get("cat") || "her"; document.body.dataset.page = cat;</script>
   <script src="js/nav.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/hub.js"></script>
