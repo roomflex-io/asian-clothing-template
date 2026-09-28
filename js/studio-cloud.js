@@ -3,8 +3,12 @@
   function show(id) {
     document.querySelectorAll("[data-screen]").forEach((el) => { el.hidden = el.dataset.screen !== id; });
   }
+  function msg(text) {
+    const el = $("[data-auth-msg]");
+    if (el) el.textContent = text || "";
+  }
   async function afterHub() {
-    if (!window.Hub || !Hub.ok) { show("offline"); return; }
+    if (!window.Hub || !Hub.ok || !Hub.client) { show("offline"); return; }
     const { data: { session } } = await Hub.client.auth.getSession();
     if (!session) { show("auth"); return; }
     const { data: shop } = await Hub.client.from("shops").select("id,name,slug,owner_name,email,phone,address_line,city,postcode,company_number,tagline,logo_url,delivery_fee,free_delivery_over,stripe_publishable_key").eq("owner_id", session.user.id).maybeSingle();
@@ -16,27 +20,60 @@
     await drawOrders();
   }
   document.addEventListener("hub-ready", afterHub);
+
+  async function signup() {
+    if (!Hub.client) { msg("Shop is still connecting. Wait a second and try again."); return; }
+    const email = $("[data-email]").value.trim();
+    const password = $("[data-password]").value;
+    if (!email || !email.includes("@")) { msg("Enter a real email."); return; }
+    if (!password || password.length < 6) { msg("Password must be at least 6 characters."); return; }
+    msg("Creating account…");
+    const { data, error } = await Hub.client.auth.signUp({ email, password });
+    if (error) { msg(error.message); return; }
+    if (data.session) {
+      msg("Account created.");
+      afterHub();
+      return;
+    }
+    const login = await Hub.client.auth.signInWithPassword({ email, password });
+    if (login.error) {
+      msg("Account made, but email confirm is on. In Supabase: Authentication → Providers → Email → turn off Confirm email. Then log in.");
+      return;
+    }
+    afterHub();
+  }
+  async function login() {
+    if (!Hub.client) { msg("Shop is still connecting. Wait a second and try again."); return; }
+    const email = $("[data-email]").value.trim();
+    const password = $("[data-password]").value;
+    if (!email || !password) { msg("Enter email and password."); return; }
+    msg("Signing in…");
+    const { error } = await Hub.client.auth.signInWithPassword({ email, password });
+    if (error) { msg(error.message); return; }
+    msg("");
+    afterHub();
+  }
+
   document.addEventListener("click", async (e) => {
-    if (e.target.matches("[data-signup]")) {
-      const { error } = await Hub.client.auth.signUp({ email: $("[data-email]").value.trim(), password: $("[data-password]").value });
-      $("[data-auth-msg]").textContent = error ? error.message : "Account created. Confirm email if asked, then log in.";
-    }
-    if (e.target.matches("[data-login]")) {
-      const { error } = await Hub.client.auth.signInWithPassword({ email: $("[data-email]").value.trim(), password: $("[data-password]").value });
-      $("[data-auth-msg]").textContent = error ? error.message : "";
-      if (!error) afterHub();
-    }
-    if (e.target.matches("[data-logout]")) { await Hub.client.auth.signOut(); location.reload(); }
-    if (e.target.matches("[data-create-shop]")) {
-      const { error } = await Hub.client.rpc("create_my_shop", {
-        p_name: $("[data-new-name]").value.trim(),
-        p_slug: $("[data-new-slug]").value.trim(),
-        p_owner_name: $("[data-new-owner]").value.trim(),
-        p_phone: null,
-        p_email: null
-      });
-      $("[data-create-msg]").textContent = error ? error.message : "";
-      if (!error) afterHub();
+    const t = e.target.closest("[data-signup], [data-login], [data-logout], [data-create-shop]");
+    if (!t) return;
+    try {
+      if (t.hasAttribute("data-signup")) await signup();
+      if (t.hasAttribute("data-login")) await login();
+      if (t.hasAttribute("data-logout")) { await Hub.client.auth.signOut(); location.reload(); }
+      if (t.hasAttribute("data-create-shop")) {
+        const { error } = await Hub.client.rpc("create_my_shop", {
+          p_name: $("[data-new-name]").value.trim(),
+          p_slug: $("[data-new-slug]").value.trim(),
+          p_owner_name: $("[data-new-owner]").value.trim(),
+          p_phone: null,
+          p_email: null
+        });
+        $("[data-create-msg]").textContent = error ? error.message : "";
+        if (!error) afterHub();
+      }
+    } catch (err) {
+      msg(err.message || "Something went wrong.");
     }
   });
   function fillShop(s) {
