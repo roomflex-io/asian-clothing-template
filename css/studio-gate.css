@@ -1,0 +1,84 @@
+body[data-page="studio"] header .logo {
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  font-size: .72rem;
+}
+body[data-page="studio"] header .logo span {
+  letter-spacing: .16em;
+}
+.gate-screen {
+  max-width: 420px;
+  padding: 36px 0 80px;
+}
+.gate-screen .kicker {
+  margin-bottom: 10px;
+}
+.gate-screen h1 {
+  font-size: clamp(2.4rem, 8vw, 3.4rem);
+  font-weight: 500;
+  line-height: .95;
+  margin: 0 0 10px;
+}
+.gate-screen .lead {
+  margin: 0 0 28px;
+  max-width: 34ch;
+}
+.gate-card {
+  display: grid;
+  gap: 16px;
+}
+.gate-card label {
+  display: grid;
+  gap: 8px;
+  font-family: "DM Sans", sans-serif;
+  font-size: .68rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.gate-card input {
+  width: 100%;
+  box-sizing: border-box;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  padding: 12px 0 14px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.35rem;
+  color: var(--ink);
+  outline: none;
+  -webkit-appearance: none;
+}
+.gate-card input:focus {
+  border-bottom-color: var(--ink);
+}
+.gate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+.gate-actions .btn {
+  flex: 1 1 160px;
+  text-align: center;
+  color: inherit;
+  -webkit-text-fill-color: inherit;
+}
+.gate-actions .btn.ghost {
+  background: transparent;
+  color: var(--ink) !important;
+  -webkit-text-fill-color: var(--ink);
+  border: 1px solid var(--ink);
+}
+.gate-actions .btn.solid {
+  color: var(--cream) !important;
+  -webkit-text-fill-color: var(--cream);
+}
+.gate-note {
+  font-family: "DM Sans", sans-serif;
+  font-size: .78rem;
+  color: var(--muted);
+  margin-top: 8px;
+  line-height: 1.5;
+}

@@ -11,41 +11,51 @@
   <link rel="stylesheet" href="css/header-order.css" />
   <link rel="stylesheet" href="css/studio.css" />
   <link rel="stylesheet" href="css/studio-extra.css" />
+  <link rel="stylesheet" href="css/studio-gate.css" />
 </head>
 <body data-page="studio">
   <header>
     <div class="wrap nav">
-      <a class="logo" href="index.html">Owner desk<span>Atelier Hub</span></a>
+      <a class="logo" href="index.html">Owner desk<span>Atelier</span></a>
     </div>
   </header>
   <main class="wrap studio">
-    <section data-screen="offline" hidden>
-      <h1>Database not connected</h1>
-      <p class="lead">Run schema.sql then schema-2, 3 and 4 in Supabase. Check Vercel env vars. Refresh this page.</p>
+    <section class="gate-screen" data-screen="offline" hidden>
+      <p class="kicker">Owner desk</p>
+      <h1>Not connected.</h1>
+      <p class="lead">Run the schema in Supabase, then refresh. This desk needs the live shop before anyone can sign in.</p>
     </section>
-    <section data-screen="auth" hidden>
+
+    <section class="gate-screen" data-screen="auth" hidden>
       <p class="kicker">Owner login</p>
-      <h1>Your shop</h1>
-      <div class="product-form">
-        <label>Email<input data-email type="email" required /></label>
-        <label>Password<input data-password type="password" required minlength="6" /></label>
-        <div class="btns">
+      <h1>Your shop.</h1>
+      <p class="lead">Owners only. Customers check out on the shop floor.</p>
+      <div class="gate-card">
+        <label>Email<input data-email type="email" autocomplete="username" required /></label>
+        <label>Password<input data-password type="password" autocomplete="current-password" required minlength="6" /></label>
+        <div class="gate-actions">
           <button class="btn solid" type="button" data-login>Log in</button>
           <button class="btn ghost" type="button" data-signup>Create owner account</button>
         </div>
-        <p class="err" data-auth-msg></p>
+        <p class="gate-note err" data-auth-msg></p>
       </div>
     </section>
-    <section data-screen="create" hidden>
-      <h1>Create your shop</h1>
-      <div class="product-form">
+
+    <section class="gate-screen" data-screen="create" hidden>
+      <p class="kicker">New shop</p>
+      <h1>Name the floor.</h1>
+      <p class="lead">This slug is how the site finds you. Use something short, like noor.</p>
+      <div class="gate-card">
         <label>Shop name<input data-new-name placeholder="Noor Atelier" /></label>
         <label>URL slug<input data-new-slug placeholder="noor" /></label>
         <label>Owner name<input data-new-owner /></label>
-        <button class="btn solid" type="button" data-create-shop>Create shop</button>
-        <p class="err" data-create-msg></p>
+        <div class="gate-actions">
+          <button class="btn solid" type="button" data-create-shop>Create shop</button>
+        </div>
+        <p class="gate-note err" data-create-msg></p>
       </div>
     </section>
+
     <section data-screen="app" hidden>
       <div class="page-hero">
         <p class="kicker">Owner desk</p>
