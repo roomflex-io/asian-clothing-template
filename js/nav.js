@@ -1,67 +1,74 @@
 (function () {
-  const shop = window.SHOP;
-  document.documentElement.style.setProperty("--gold", shop.gold);
-  document.documentElement.style.setProperty("--ink", shop.ink);
-  document.documentElement.style.setProperty("--cream", shop.cream);
+  function brand() {
+    const shop = window.SHOP || {};
+    if (shop.gold) document.documentElement.style.setProperty("--gold", shop.gold);
+    if (shop.ink) document.documentElement.style.setProperty("--ink", shop.ink);
+    if (shop.cream) document.documentElement.style.setProperty("--cream", shop.cream);
 
-  document.querySelectorAll("[data-shop-name]").forEach((el) => {
-    el.textContent = shop.name;
-  });
-  document.querySelectorAll("[data-tagline]").forEach((el) => {
-    el.textContent = shop.tagline;
-  });
+    document.querySelectorAll("[data-shop-name]").forEach((el) => {
+      const tag = el.querySelector("[data-tagline], span");
+      const tagText = (shop.tagline || (tag && tag.textContent) || "").trim();
+      el.textContent = "";
+      el.append(document.createTextNode(shop.name || ""));
+      if (tag || tagText) {
+        const span = document.createElement("span");
+        if (tag && tag.getAttribute("data-tagline") !== null) span.setAttribute("data-tagline", "");
+        span.textContent = tagText;
+        el.appendChild(span);
+      }
+    });
+    document.querySelectorAll("[data-tagline]").forEach((el) => {
+      if (shop.tagline) el.textContent = shop.tagline;
+    });
+    document.querySelectorAll("[data-email]").forEach((el) => {
+      if (!shop.email) return;
+      if (el.tagName === "A") { el.href = "mailto:" + shop.email; el.textContent = shop.email; }
+      else el.textContent = shop.email;
+    });
+    document.querySelectorAll("[data-phone]").forEach((el) => {
+      if (shop.phone) el.textContent = shop.phone;
+    });
+    document.querySelectorAll("[data-address]").forEach((el) => {
+      if (shop.address) el.textContent = shop.address;
+    });
+    document.querySelectorAll("[data-owner]").forEach((el) => {
+      if (shop.ownerName) el.textContent = shop.ownerName;
+    });
+    document.querySelectorAll("[data-year]").forEach((el) => {
+      el.textContent = new Date().getFullYear();
+    });
+    const wa = shop.whatsapp || (shop.phone ? ("https://wa.me/" + String(shop.phone).replace(/[^0-9]/g, "")) : "");
+    document.querySelectorAll("[data-wa]").forEach((a) => { if (wa) a.href = wa; });
+    document.querySelectorAll("[data-ig]").forEach((a) => { if (shop.instagram) a.href = shop.instagram; });
 
-  const links = document.querySelector("[data-nav]");
-  if (!links) return;
-
-  const page = document.body.dataset.page || "";
-  const always = [
-    { href: "index.html", label: "Home", key: "home" },
-  ];
-
-  const cols = Object.entries(shop.collections)
-    .filter(([, c]) => c.on)
-    .map(([key, c]) => ({ href: c.href, label: c.label, key }));
-
-  const after = [
-    { href: "contact.html", label: "Contact", key: "contact" },
-    { href: "privacy.html", label: "Privacy", key: "privacy" }
-  ];
-
-  const all = [...always, ...cols, ...after];
-  links.innerHTML = all
-    .map((l) => {
-      const active =
-        (page === "home" && l.key === "home") ||
-        (page === "contact" && l.key === "contact") ||
-        (page === "privacy" && l.key === "privacy") ||
-        (page === l.key);
-      return `<a href="${l.href}" class="${active ? "active" : ""}">${l.label}</a>`;
-    })
-    .join("");
-
-  const burger = document.querySelector("[data-burger]");
-  if (burger) {
-    burger.addEventListener("click", () => links.classList.toggle("open"));
+    const page = document.body.dataset.page || "";
+    if (shop.name && page === "contact") document.title = "Visit — " + shop.name;
+    if (shop.name && page === "home") document.title = shop.name + (shop.tagline ? " — " + shop.tagline : "");
+    if (shop.name && page === "privacy") document.title = "Privacy — " + shop.name;
   }
 
-  document.querySelectorAll("[data-wa]").forEach((a) => {
-    a.href = shop.whatsapp;
-  });
-  document.querySelectorAll("[data-ig]").forEach((a) => {
-    a.href = shop.instagram;
-  });
-  document.querySelectorAll("[data-email]").forEach((el) => {
-    if (el.tagName === "A") el.href = "mailto:" + shop.email;
-    else el.textContent = shop.email;
-  });
-  document.querySelectorAll("[data-phone]").forEach((el) => {
-    el.textContent = shop.phone;
-  });
-  document.querySelectorAll("[data-address]").forEach((el) => {
-    el.textContent = shop.address;
-  });
-  document.querySelectorAll("[data-year]").forEach((el) => {
-    el.textContent = new Date().getFullYear();
-  });
+  function links() {
+    const shop = window.SHOP || {};
+    const nav = document.querySelector("[data-nav]");
+    if (!nav) return;
+    const page = document.body.dataset.page || "";
+    const cols = Object.entries(shop.collections || {})
+      .filter(([, c]) => c.on)
+      .map(([key, c]) => ({ href: c.href, label: c.label, key }));
+    const all = [{ href: "index.html", label: "Home", key: "home" }, ...cols, { href: "contact.html", label: "Contact", key: "contact" }, { href: "privacy.html", label: "Privacy", key: "privacy" }];
+    nav.innerHTML = all.map((l) => {
+      const active = page === l.key || (page === "home" && l.key === "home");
+      return "<a href=\"" + l.href + "\" class=\"" + (active ? "active" : "") + "\">" + l.label + "</a>";
+    }).join("");
+    const burger = document.querySelector("[data-burger]");
+    if (burger && !burger.dataset.bound) {
+      burger.dataset.bound = "1";
+      burger.addEventListener("click", () => nav.classList.toggle("open"));
+    }
+  }
+
+  brand();
+  links();
+  document.addEventListener("hub-ready", () => { brand(); links(); });
+  window.applyShopBrand = brand;
 })();
